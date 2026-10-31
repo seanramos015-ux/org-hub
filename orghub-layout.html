@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title> PRMSU College of Engineering - Student Body Organization</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<base target="_blank">
+</head>
+<body>
+
+<header class="site">
+  <div class="header-inner">
+    <div class="brand">
+      
+      <div class="brand-text">
+        <div class="name">PRMSU College of Engineering - Student Body Organization</div>
+        <div class="sub"></div>
+      </div>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="primary" id="primary-nav">
+      <button data-view="home" class="active">HOME</button>
+      <button data-view="officers">OFFICERS</button>
+      <button data-view="events">EVENTS</button>
+      <button data-view="gallery">GALLERY</button>
+      <button data-view="reports">REPORTS</button>
+      <button data-view="resolutions">RESOLUTIONS</button>
+      <button data-view="transparency">TRANSPARENCY</button>
+      <button data-view="evaluate">EVALUATE</button>
+    </nav>
+  </div>
+  <div class="trace">
+    <svg viewBox="0 0 1200 6" preserveAspectRatio="none"><path d="M0 3 H1200" stroke="#B8712F" stroke-width="1" stroke-dasharray="1 7"/></svg>
+  </div>
+</header>
+
+<div class="photo-hero" id="photo-hero">
+  <div id="photo-hero-slides"></div>
+  <div class="dots" id="photo-hero-dots"></div>
+</div>
+
+<main>
+
+  <!-- HOME -->
+  <section class="view" id="view-home">
+    <div class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <h1>Every record of the chapter, in one place.</h1>
+          <p class="lede">Officers, activities, resolutions, and financial reports — organized so any student, adviser, or member can find what actually happened, without digging through group chats or old posts.</p>
+          <div class="cta-row">
+            <a class="btn solid" href="#" onclick="showView('events');return false;">See upcoming activities</a>
+            <a class="btn" href="#" onclick="showView('transparency');return false;">View transparency reports</a>
+          </div>
+        </div>
+        <div class="hero-panel">
+          <div class="k">Chapter snapshot</div>
+          <div class="v">AY 2025–2026</div>
+          <div class="row"><span>Active officers</span><span>12</span></div>
+          <div class="row"><span>Activities logged</span><span>8</span></div>
+          <div class="row"><span>Resolutions on file</span><span>5</span></div>
+          <div class="row"><span>Transparency reports</span><span>3</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap" style="padding-top:48px;">
+      <div class="section-head"><h2>Mission &amp; vision</h2></div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px; margin-bottom:52px;">
+        <div>
+          <div class="tag" style="margin-bottom:10px;">Mission</div>
+          <p style="max-width:48ch;">To build a community of computer engineering students grounded in technical competence, professional integrity, and service to PRMSU and the wider region.</p>
+        </div>
+        <div>
+          <div class="tag" style="margin-bottom:10px;">Vision</div>
+          <p style="max-width:48ch;">A chapter where every member has access to the organization's work — past and present — and where accountability is a matter of public record, not memory.</p>
+        </div>
+      </div>
+
+      <div class="section-head"><h2>Recent activity</h2><span class="count">from Events &amp; Activities</span></div>
+      <div style="margin-bottom:20px;">
+        <div class="event-row">
+          <div class="date">Aug 22, 2026</div>
+          <div><p class="title">Circuit Design Bootcamp</p><p class="desc">Two-day hands-on session on PCB layout and embedded systems, open to all BSCPE year levels.</p></div>
+          <span class="tag">Completed</span>
+        </div>
+        <div class="event-row">
+          <div class="date">Sep 18, 2026</div>
+          <div><p class="title">General Assembly &amp; Officer Induction</p><p class="desc">Chapter-wide assembly to induct newly elected officers for AY 2026–2027.</p></div>
+          <span class="tag upcoming">Upcoming</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OFFICERS -->
+  <section class="view" id="view-officers">
+    <div class="wrap">
+      <div class="section-head"><h2>Officers</h2><span class="count">AY 2025–2026</span></div>
+      <div class="officer-grid" id="officer-grid"></div>
+      <p style="margin-top:24px; color:var(--ink-soft); font-size:0.9rem;">Organizational structure diagram and full committee listing appear below the officer grid in the built site.</p>
+    </div>
+  </section>
+
+  <!-- EVENTS -->
+  <section class="view" id="view-events">
+    <div class="wrap">
+      <div class="section-head"><h2>Events &amp; activities</h2><span class="count">8 logged</span></div>
+      <div id="events-list"></div>
+
+      <div class="section-head" style="margin-top:56px;"><h2>Activity calendar</h2></div>
+      <div class="cal">
+        <div class="cal-head"><div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div></div>
+        <div class="cal-body" id="cal-body"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="view" id="view-gallery">
+    <div class="wrap">
+      <div class="section-head"><h2>Event photo gallery</h2><span class="count">grouped by activity</span></div>
+      <div class="gallery-grid" id="gallery-grid"></div>
+    </div>
+  </section>
+
+  <!-- REPORTS -->
+  <section class="view" id="view-reports">
+    <div class="wrap">
+      <div class="section-head"><h2>Narrative reports</h2><span class="count">archive</span></div>
+      <div class="ledger" id="reports-ledger"></div>
+    </div>
+  </section>
+
+  <!-- RESOLUTIONS -->
+  <section class="view" id="view-resolutions">
+    <div class="wrap">
+      <div class="section-head"><h2>Organization resolutions</h2><span class="count">by number</span></div>
+      <div class="ledger" id="resolutions-ledger"></div>
+    </div>
+  </section>
+
+  <!-- TRANSPARENCY -->
+  <section class="view" id="view-transparency">
+    <div class="wrap">
+      <div class="section-head"><h2>Transparency reports</h2></div>
+      <div class="transparency-strip">
+        <div class="cell"><div class="label">Financial</div><p class="desc">Collections, disbursements, and remaining balance per activity and per semester.</p></div>
+        <div class="cell"><div class="label">Accomplishment</div><p class="desc">Plans versus completed activities, matched against the chapter's annual work plan.</p></div>
+        <div class="cell"><div class="label">Project / activity</div><p class="desc">Per-event summaries covering objectives, turnout, and outcomes.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EVALUATE -->
+  <section class="view" id="view-evaluate">
+    <div class="wrap">
+      <div class="section-head"><h2>Event evaluation</h2></div>
+      <p style="max-width:56ch; color:var(--ink-soft);">Each completed activity links to its own evaluation form. Forms are embedded directly from Google Forms — responses are collected and stored on Google's platform, not on this site.</p>
+      <div class="eval-box" style="margin-top:20px;">
+        <strong>Embedded Google Form appears here</strong>
+        Example: "Circuit Design Bootcamp — Post-Event Evaluation"
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span>OrgHub | PRMSU College of Engineering Student Body Organization</span>
+  <span>Layout draft · not yet wired to a backend</span>
+</footer>
+
+<script>
+  const officers = [
+    ["President","Juan Dela Cruz"],["Vice President – Internal","Maria Santos"],
+    ["Vice President – External","Carlo Ramirez"],["Secretary","Angela Reyes"],
+    ["Treasurer","Paolo Mendoza"],["Auditor","Diane Cruz"]
+  ];
+  document.getElementById('officer-grid').innerHTML = officers.map(([pos,name])=>{
+    const initials = name.split(' ').map(w=>w[0]).join('');
+    return `<div class="officer"><div class="photo">${initials}</div><div class="pos">${pos}</div><div class="name">${name}</div></div>`;
+  }).join('');
+
+  const events = [
+    ["Aug 22, 2026","Circuit Design Bootcamp","Two-day hands-on session on PCB layout and embedded systems.","Completed"],
+    ["Jul 14, 2026","Freshmen Orientation","Introduction to the chapter for incoming BSCPE 1st years.","Completed"],
+    ["Jun 05, 2026","Industry Talk: Embedded Careers","Guest lecture from a local electronics manufacturer.","Completed"],
+    ["Sep 18, 2026","General Assembly & Officer Induction","Chapter-wide assembly to induct AY 2026–2027 officers.","Upcoming"],
+    ["Oct 03, 2026","Hackathon Prep Workshop","Team-forming and problem-solving session ahead of the regional hackathon.","Upcoming"],
+  ];
+  document.getElementById('events-list').innerHTML = events.map(([d,t,desc,tag])=>
+    `<div class="event-row"><div class="date">${d}</div><div><p class="title">${t}</p><p class="desc">${desc}</p></div><span class="tag ${tag==='Upcoming'?'upcoming':''}">${tag}</span></div>`
+  ).join('');
+
+  // calendar (Sept 2026, 30 days, starts Tuesday)
+  const calDays = 30, startOffset = 2; // Tue
+  const eventDays = [18,3].filter(d=>d<=calDays);
+  let calHtml = '';
+  for(let i=0;i<startOffset;i++) calHtml += `<div class="day"></div>`;
+  for(let d=1; d<=calDays; d++){
+    const hasEvent = eventDays.includes(d);
+    calHtml += `<div class="day ${hasEvent?'has-event':''}"><div class="num">${d}</div>${hasEvent?'<div class="dot">event</div>':''}</div>`;
+  }
+  document.getElementById('cal-body').innerHTML = calHtml;
+
+  const galleryItems = ["Bootcamp — Day 1","Bootcamp — Day 2","Orientation","Industry Talk","Team Building","Booth Setup","Awarding","Closing Program"];
+  document.getElementById('gallery-grid').innerHTML = galleryItems.map(g=>`<div class="cell">${g}</div>`).join('');
+
+  const reports = [
+    ["01","Circuit Design Bootcamp — Narrative Report","Aug 2026"],
+    ["02","Freshmen Orientation — Narrative Report","Jul 2026"],
+    ["03","Industry Talk — Narrative Report","Jun 2026"],
+  ];
+  document.getElementById('reports-ledger').innerHTML =
+    `<div class="ledger-row head"><span>No.</span><span>Title</span><span>Date</span><span>Document</span></div>` +
+    reports.map(([n,t,d])=>`<div class="ledger-row"><span class="num">${n}</span><span class="title">${t}</span><span class="meta">${d}</span><a class="doc" href="#">View</a></div>`).join('');
+
+  const resolutions = [
+    ["2026-01","Approval of the AY 2026–2027 Annual Work Plan","Aug 2026"],
+    ["2026-02","Revision of the Chapter's VP Structure","Jul 2026"],
+    ["2025-14","Allocation of Membership Dues for Equipment Fund","Mar 2026"],
+  ];
+  document.getElementById('resolutions-ledger').innerHTML =
+    `<div class="ledger-row head"><span>No.</span><span>Title</span><span>Date</span><span>Document</span></div>` +
+    resolutions.map(([n,t,d])=>`<div class="ledger-row"><span class="num">${n}</span><span class="title">${t}</span><span class="meta">${d}</span><a class="doc" href="#">View</a></div>`).join('');
+
+  // ---------- Photo hero carousel ----------
+  // To add or change photos, edit this list directly. Each entry needs:
+  //   src     — an image URL, or a relative path like "images/event1.jpg"
+  //   caption — text shown at the bottom of the slide
+  // The hero rotates through these automatically every 5 seconds.
+  const heroPhotos = [
+    { src: "images/coe1.jpg",   caption: "Most active student organization , Aug 2026" },
+    { src: "images/assembly.jpg",   caption: "General Assembly, Sep 2026" },
+    { src: "images/industry-talk.jpg", caption: "Industry Talk: Embedded Careers" },
+    // { src: "images/your-photo.jpg", caption: "Your caption here" },
+  ];
+  let heroIndex = 0;
+  let heroTimer = null;
+
+  function renderHero(){
+    const slidesEl = document.getElementById('photo-hero-slides');
+    const dotsEl = document.getElementById('photo-hero-dots');
+    if(heroPhotos.length === 0){
+      slidesEl.innerHTML = `<div class="empty-state">
+          <div>No photos yet</div>
+          <div class="hint">Add entries to the heroPhotos list in the HTML code to fill this hero.</div>
+        </div>`;
+      dotsEl.innerHTML = '';
+      return;
+    }
+    slidesEl.innerHTML = heroPhotos.map((p,i)=>
+      `<div class="slide ${i===heroIndex?'active':''}" style="background-image:url('${p.src}')">
+         <div class="cap">${p.caption}</div>
+       </div>`
+    ).join('');
+    dotsEl.innerHTML = heroPhotos.map((_,i)=>
+      `<button class="${i===heroIndex?'active':''}" data-i="${i}" aria-label="Show photo ${i+1}"></button>`
+    ).join('');
+    dotsEl.querySelectorAll('button').forEach(b=>{
+      b.addEventListener('click', ()=>{ goToSlide(parseInt(b.dataset.i,10)); restartHeroTimer(); });
+    });
+  }
+
+  function goToSlide(i){
+    if(heroPhotos.length === 0) return;
+    heroIndex = (i + heroPhotos.length) % heroPhotos.length;
+    renderHero();
+  }
+
+  function restartHeroTimer(){
+    if(heroTimer) clearInterval(heroTimer);
+    heroTimer = setInterval(()=>{ goToSlide(heroIndex+1); }, 5000);
+  }
+
+  renderHero();
+  restartHeroTimer();
+
+  // Mobile burger toggle
+  const navToggle = document.getElementById('nav-toggle');
+  const primaryNav = document.getElementById('primary-nav');
+  navToggle.addEventListener('click', ()=>{
+    const open = primaryNav.classList.toggle('open');
+    navToggle.classList.toggle('open', open);
+    navToggle.setAttribute('aria-expanded', open);
+  });
+  primaryNav.querySelectorAll('button').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      primaryNav.classList.remove('open');
+      navToggle.classList.remove('open');
+      navToggle.setAttribute('aria-expanded','false');
+    });
+  });
+
+  function showView(name){
+    const target = document.getElementById('view-'+name);
+    if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+    document.querySelectorAll('#primary-nav button').forEach(b=>b.classList.toggle('active', b.dataset.view===name));
+  }
+  document.querySelectorAll('#primary-nav button').forEach(b=>{
+    b.addEventListener('click', ()=>showView(b.dataset.view));
+  });
+</script>
+
+<!-- Supabase JavaScript Library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- OrgHub Supabase Configuration -->
+<script src="supabase-config.js"></script>
+
+</body>
+</html>
