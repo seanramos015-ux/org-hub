@@ -1,0 +1,310 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OrgHub | Events Management</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f1f3f6;
+            color: #263445;
+        }
+
+        header {
+            background: #183153;
+            color: white;
+            padding: 18px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+        }
+
+        main {
+            max-width: 1150px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .panel {
+            background: white;
+            padding: 24px;
+            border-radius: 10px;
+            margin-bottom: 22px;
+            box-shadow: 0 3px 12px rgba(0,0,0,.05);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #ccd2da;
+            border-radius: 5px;
+            font: inherit;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: 0;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:disabled {
+            opacity: .6;
+            cursor: not-allowed;
+        }
+
+        .primary {
+            background: #183153;
+            color: white;
+        }
+
+        .secondary {
+            background: #e7ebf0;
+            color: #263445;
+        }
+
+        .danger {
+            background: #b83232;
+            color: white;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 850px;
+        }
+
+        th, td {
+            padding: 13px;
+            border-bottom: 1px solid #e5e8ed;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        th { color: #183153; }
+
+        .event-thumbnail {
+            width: 75px;
+            height: 55px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .status {
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: capitalize;
+        }
+
+        .published { color: #16834a; }
+        .unpublished { color: #b7791f; }
+
+        #form-message, #list-message {
+            font-size: 14px;
+            margin-top: 12px;
+        }
+
+        @media (max-width: 650px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full-width {
+                grid-column: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h2>OrgHub | Events</h2>
+    <a href="admin-dashboard.html">← Dashboard</a>
+</header>
+
+<main>
+
+    <section class="panel">
+        <h2 id="form-title">Add New Event</h2>
+
+        <form id="event-form">
+            <div class="form-grid">
+
+                <div class="full-width">
+                    <label for="event-title">Event Title</label>
+                    <input id="event-title" required maxlength="200">
+                </div>
+
+                <div class="full-width">
+                    <label for="event-description">Description</label>
+                    <textarea
+                        id="event-description"
+                        placeholder="Enter event details..."
+                    ></textarea>
+                </div>
+
+                <div class="full-width">
+                    <label for="event-location">Venue / Location</label>
+                    <input
+                        id="event-location"
+                        placeholder="e.g. PRMSU Iba Campus Gymnasium"
+                    >
+                </div>
+
+                <div>
+                    <label for="starts-at">Start Date and Time</label>
+                    <input id="starts-at" type="datetime-local">
+                </div>
+
+                <div>
+                    <label for="ends-at">End Date and Time</label>
+                    <input id="ends-at" type="datetime-local">
+                </div>
+
+                <div>
+                    <label for="event-status">Event Status</label>
+                    <select id="event-status" required>
+                        <option value="upcoming">Upcoming</option>
+                        <option value="ongoing">Ongoing</option>
+                        <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                </div>
+
+                <div class="full-width">
+                    <label for="event-cover">Event Cover Photo</label>
+                    <input
+                        id="event-cover"
+                        type="file"
+                        accept="image/jpeg,image/png,image/webp"
+                    >
+                    <small>
+                        Accepted formats: JPG, PNG, WEBP.
+                        Maximum size: 10 MB.
+                    </small>
+
+                    <div style="margin-top:12px;">
+                        <img
+                            id="cover-preview"
+                            alt="Event cover preview"
+                            style="display:none; width:180px; height:120px;
+                            object-fit:cover; border-radius:8px;"
+                        >
+                    </div>
+                </div>
+
+                <div class="full-width">
+                    <label>
+                        <input
+                            type="checkbox"
+                            id="event-published"
+                            style="width:auto"
+                        >
+                        Publish this event on the public website
+                    </label>
+                </div>
+
+                <div class="full-width actions">
+                    <button
+                        class="primary"
+                        id="save-button"
+                        type="submit"
+                    >
+                        Save Event
+                    </button>
+
+                    <button
+                        class="secondary"
+                        id="cancel-button"
+                        type="button"
+                        hidden
+                    >
+                        Cancel Edit
+                    </button>
+                </div>
+
+            </div>
+
+            <p id="form-message" role="status"></p>
+        </form>
+    </section>
+
+    <section class="panel">
+        <h2>Event Records</h2>
+
+        <p id="list-message" role="status">
+            Loading events...
+        </p>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cover</th>
+                        <th>Event Title</th>
+                        <th>Date</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th>Visibility</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody id="events-table"></tbody>
+            </table>
+        </div>
+    </section>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="events.js"></script>
+
+</body>
+</html>
