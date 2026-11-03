@@ -217,36 +217,12 @@
 </footer>
 
 <script>
-
-
-  const reports = [
-    ["01","Circuit Design Bootcamp — Narrative Report","Aug 2026"],
-    ["02","Freshmen Orientation — Narrative Report","Jul 2026"],
-    ["03","Industry Talk — Narrative Report","Jun 2026"],
-  ];
-  document.getElementById('reports-ledger').innerHTML =
-    `<div class="ledger-row head"><span>No.</span><span>Title</span><span>Date</span><span>Document</span></div>` +
-    reports.map(([n,t,d])=>`<div class="ledger-row"><span class="num">${n}</span><span class="title">${t}</span><span class="meta">${d}</span><a class="doc" href="#">View</a></div>`).join('');
-
-  const resolutions = [
-    ["2026-01","Approval of the AY 2026–2027 Annual Work Plan","Aug 2026"],
-    ["2026-02","Revision of the Chapter's VP Structure","Jul 2026"],
-    ["2025-14","Allocation of Membership Dues for Equipment Fund","Mar 2026"],
-  ];
-  document.getElementById('resolutions-ledger').innerHTML =
-    `<div class="ledger-row head"><span>No.</span><span>Title</span><span>Date</span><span>Document</span></div>` +
-    resolutions.map(([n,t,d])=>`<div class="ledger-row"><span class="num">${n}</span><span class="title">${t}</span><span class="meta">${d}</span><a class="doc" href="#">View</a></div>`).join('');
-
   // ---------- Photo hero carousel ----------
-  // To add or change photos, edit this list directly. Each entry needs:
-  //   src     — an image URL, or a relative path like "images/event1.jpg"
-  //   caption — text shown at the bottom of the slide
-  // The hero rotates through these automatically every 5 seconds.
+  // src: image URL or relative path; caption: text shown on the slide.
   const heroPhotos = [
-    { src: "images/coe1.jpg",   caption: "Most active student organization , Aug 2026" },
-    { src: "images/assembly.jpg",   caption: "General Assembly, Sep 2026" },
-    { src: "images/industry-talk.jpg", caption: "Industry Talk: Embedded Careers" },
-    // { src: "images/your-photo.jpg", caption: "Your caption here" },
+    { src: "images/coe1.jpg", caption: "Most active student organization , Aug 2026" },
+    // { src: "images/assembly.jpg", caption: "General Assembly, Sep 2026" },
+    // { src: "images/industry-talk.jpg", caption: "Industry Talk: Embedded Careers" },
   ];
   let heroIndex = 0;
   let heroTimer = null;
@@ -254,6 +230,7 @@
   function renderHero(){
     const slidesEl = document.getElementById('photo-hero-slides');
     const dotsEl = document.getElementById('photo-hero-dots');
+    if(!slidesEl || !dotsEl) return;
     if(heroPhotos.length === 0){
       slidesEl.innerHTML = `<div class="empty-state">
           <div>No photos yet</div>
@@ -283,35 +260,40 @@
 
   function restartHeroTimer(){
     if(heroTimer) clearInterval(heroTimer);
-    heroTimer = setInterval(()=>{ goToSlide(heroIndex+1); }, 5000);
+    if(heroPhotos.length > 1){
+      heroTimer = setInterval(()=>{ goToSlide(heroIndex+1); }, 5000);
+    }
   }
 
   renderHero();
   restartHeroTimer();
 
-  // Mobile burger toggle
+  // ---------- Mobile burger toggle ----------
   const navToggle = document.getElementById('nav-toggle');
   const primaryNav = document.getElementById('primary-nav');
+
   navToggle.addEventListener('click', ()=>{
     const open = primaryNav.classList.toggle('open');
     navToggle.classList.toggle('open', open);
     navToggle.setAttribute('aria-expanded', open);
   });
+
+  // ---------- Navigation ----------
+  function showView(name){
+    const target = document.getElementById('view-'+name);
+    if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+    document.querySelectorAll('#primary-nav button').forEach(b=>{
+      b.classList.toggle('active', b.dataset.view===name);
+    });
+  }
+
   primaryNav.querySelectorAll('button').forEach(b=>{
     b.addEventListener('click', ()=>{
+      showView(b.dataset.view);
       primaryNav.classList.remove('open');
       navToggle.classList.remove('open');
       navToggle.setAttribute('aria-expanded','false');
     });
-  });
-
-  function showView(name){
-    const target = document.getElementById('view-'+name);
-    if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
-    document.querySelectorAll('#primary-nav button').forEach(b=>b.classList.toggle('active', b.dataset.view===name));
-  }
-  document.querySelectorAll('#primary-nav button').forEach(b=>{
-    b.addEventListener('click', ()=>showView(b.dataset.view));
   });
 </script>
 
