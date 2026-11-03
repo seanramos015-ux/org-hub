@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Settings | OrgHub</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px 18px;
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            color: #252525;
+        }
+
+        .settings-container {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            margin: 0 0 8px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin: 0;
+        }
+
+        .back-link {
+            color: #174c35;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .settings-card {
+            background: white;
+            padding: 28px;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.06);
+        }
+
+        .field-group {
+            margin-bottom: 22px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .field-description {
+            display: block;
+            color: #777;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d5d9df;
+            border-radius: 7px;
+            font: inherit;
+            outline: none;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #236b49;
+            box-shadow: 0 0 0 2px rgba(35,107,73,0.10);
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 28px;
+        }
+
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        #save-settings {
+            background: #174c35;
+            color: white;
+        }
+
+        #reset-settings {
+            background: #e9ecef;
+            color: #333;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        #status-message {
+            margin-top: 18px;
+            font-size: 14px;
+        }
+
+        #last-updated {
+            margin-top: 18px;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .success {
+            color: #167344;
+        }
+
+        .error {
+            color: #c0392b;
+        }
+
+        @media (max-width: 600px) {
+            .settings-card {
+                padding: 20px;
+            }
+        }
+    </style>
+
+    <script src="supabase-config.js" defer></script>
+    <script src="site-settings.js" defer></script>
+</head>
+
+<body>
+    <main class="settings-container">
+
+        <header class="page-header">
+            <div>
+                <h1>Site Settings</h1>
+                <p class="subtitle">
+                    Manage the public information displayed on the OrgHub website.
+                </p>
+            </div>
+
+            <a href="admin-dashboard.html" class="back-link">
+                ← Back to Dashboard
+            </a>
+        </header>
+
+        <section class="settings-card">
+
+            <form id="settings-form">
+
+                <div class="field-group">
+                    <label for="organization_name">Organization Name</label>
+                    <span class="field-description">
+                        The official name displayed on the website.
+                    </span>
+                    <input type="text" id="organization_name" required>
+                </div>
+
+                <div class="field-group">
+                    <label for="academic_year">Academic Year</label>
+                    <span class="field-description">
+                        Example: 2026–2027
+                    </span>
+                    <input type="text" id="academic_year" required>
+                </div>
+
+                <div class="field-group">
+                    <label for="homepage_headline">Homepage Headline</label>
+                    <span class="field-description">
+                        The main heading visitors see on the homepage.
+                    </span>
+                    <input type="text" id="homepage_headline" required>
+                </div>
+
+                <div class="field-group">
+                    <label for="homepage_description">Homepage Description</label>
+                    <span class="field-description">
+                        A short introduction to your organization.
+                    </span>
+                    <textarea id="homepage_description" required></textarea>
+                </div>
+
+                <div class="field-group">
+                    <label for="mission">Mission</label>
+                    <span class="field-description">
+                        The official mission statement.
+                    </span>
+                    <textarea id="mission" required></textarea>
+                </div>
+
+                <div class="field-group">
+                    <label for="vision">Vision</label>
+                    <span class="field-description">
+                        The official vision statement.
+                    </span>
+                    <textarea id="vision" required></textarea>
+                </div>
+
+                <div class="actions">
+                    <button type="submit" id="save-settings">
+                        Save Changes
+                    </button>
+
+                    <button type="button" id="reset-settings">
+                        Reset Changes
+                    </button>
+                </div>
+
+                <p id="status-message" role="status" aria-live="polite"></p>
+                <p id="last-updated">Last updated: Loading...</p>
+
+            </form>
+        </section>
+    </main>
+</body>
+</html>
