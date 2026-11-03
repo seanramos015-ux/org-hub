@@ -569,3 +569,55 @@ footer{
 .public-report-link:hover {
     opacity: 0.85;
 }
+
+/* Public Resolutions */
+
+.public-resolution-card {
+    padding: 22px;
+    margin-bottom: 16px;
+    border: 1px solid var(--border, #ddd);
+    border-radius: 12px;
+    background: var(--surface, #fff);
+}
+
+.public-resolution-content h3 {
+    margin: 10px 0;
+    color: var(--ink, #222);
+}
+
+.public-resolution-category {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft, #666);
+}
+
+.public-resolution-reference,
+.public-resolution-date {
+    font-size: 13px;
+    color: var(--ink-soft, #666);
+    margin: 6px 0;
+}
+
+.public-resolution-description {
+    margin: 12px 0;
+    line-height: 1.6;
+    color: var(--ink-soft, #555);
+}
+
+.public-resolution-link {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 9px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    background: var(--accent, #222);
+    color: white;
+}
+
+.public-resolution-link:hover {
+    opacity: 0.85;
+}
