@@ -456,3 +456,64 @@ footer{
   border-radius: 10px;
   text-align: center;
 }
+
+
+/* PUBLIC GALLERY - PHASE 5B */
+
+.public-gallery-card {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  overflow: hidden;
+  min-width: 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.public-gallery-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.09);
+}
+
+.public-gallery-image-wrapper {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: #f1f1f1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.public-gallery-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.public-gallery-content {
+  padding: 16px;
+}
+
+.public-gallery-content h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+
+.public-gallery-event {
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  margin: 0 0 8px;
+}
+
+.public-gallery-caption {
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.gallery-image-error {
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+}

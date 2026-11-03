@@ -126,12 +126,22 @@
   </section>
 
   <!-- GALLERY -->
-  <section class="view" id="view-gallery">
-    <div class="wrap">
-      <div class="section-head"><h2>Event photo gallery</h2><span class="count">grouped by activity</span></div>
-      <div class="gallery-grid" id="gallery-grid"></div>
+  
+<section class="view" id="view-gallery">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Event photo gallery</h2>
+      <span class="count" id="gallery-count">Loading photos...</span>
     </div>
-  </section>
+
+    <div class="gallery-grid" id="gallery-grid">
+      <p style="color:var(--ink-soft);">
+        Loading gallery images...
+      </p>
+    </div>
+  </div>
+</section>
+
 
   <!-- REPORTS -->
   <section class="view" id="view-reports">
@@ -194,12 +204,6 @@
 
 <script>
 
-
-
-
-
-  const galleryItems = ["Bootcamp — Day 1","Bootcamp — Day 2","Orientation","Industry Talk","Team Building","Booth Setup","Awarding","Closing Program"];
-  document.getElementById('gallery-grid').innerHTML = galleryItems.map(g=>`<div class="cell">${g}</div>`).join('');
 
   const reports = [
     ["01","Circuit Design Bootcamp — Narrative Report","Aug 2026"],
@@ -305,5 +309,6 @@
 <script src="public.js"></script>
 <script src="public-events.js"></script>
 <script src="public-evaluations.js"></script>
+<script src="public-gallery.js"></script>
 </body>
 </html>

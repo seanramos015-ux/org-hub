@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Documents | OrgHub</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .documents-admin { max-width: 1150px; margin: 40px auto; padding: 20px; }
+    .documents-panel { background: white; padding: 24px; border-radius: 12px; margin: 24px 0; }
+    .documents-form { display: grid; gap: 14px; }
+    .documents-form label { display: grid; gap: 6px; font-weight: 600; }
+    .documents-form input, .documents-form select, .documents-form textarea {
+      width: 100%; padding: 11px; border: 1px solid #ccc;
+      border-radius: 6px; font: inherit;
+    }
+    .documents-form textarea { min-height: 90px; }
+    .documents-form button, .document-action {
+      padding: 9px 14px; border: 0; border-radius: 6px; cursor: pointer;
+    }
+    .document-save { background: #173f35; color: white; }
+    .document-cancel { background: #e8e8e8; }
+    .documents-table-wrap { overflow-x: auto; }
+    .documents-table { width: 100%; border-collapse: collapse; }
+    .documents-table th, .documents-table td {
+      padding: 12px; border-bottom: 1px solid #ddd;
+      text-align: left; vertical-align: top;
+    }
+    .document-edit { background: #e7edf8; margin: 2px; }
+    .document-delete { background: #fbe5e5; margin: 2px; }
+    .document-private { color: #a15b00; font-weight: 600; }
+    .document-public { color: green; font-weight: 600; }
+    .document-message { margin: 10px 0; }
+  </style>
+</head>
+<body>
+  <main class="documents-admin">
+    <p><a href="admin-dashboard.html">← Back to Dashboard</a></p>
+    <h1>Manage Reports and Resolutions</h1>
+    <p>Upload and manage approved organizational documents.</p>
+
+    <section class="documents-panel">
+      <h2 id="document-form-title">Add Document</h2>
+
+      <form id="document-form" class="documents-form">
+        <label>
+          Document Category
+          <select id="document-category" required>
+            <option value="narrative_report">Narrative Report</option>
+            <option value="resolution">Resolution</option>
+            <option value="financial_report">Financial Report</option>
+            <option value="accomplishment_report">Accomplishment Report</option>
+            <option value="activity_report">Activity Report</option>
+          </select>
+        </label>
+
+        <label>
+          Reference Number (optional)
+          <input id="document-reference" type="text"
+                 placeholder="e.g. RES-2026-001">
+        </label>
+
+        <label>
+          Document Title
+          <input id="document-title" type="text" required maxlength="200">
+        </label>
+
+        <label>
+          Description
+          <textarea id="document-description" maxlength="2000"
+                    placeholder="Briefly describe this document..."></textarea>
+        </label>
+
+        <label>
+          Document Date
+          <input id="document-date" type="date">
+        </label>
+
+        <label>
+          Upload PDF
+          <input id="document-file" type="file"
+                 accept="application/pdf">
+        </label>
+
+        <p id="current-file-message"></p>
+
+        <label>
+          <span>
+            <input id="document-published" type="checkbox">
+            Publish this document
+          </span>
+        </label>
+
+        <p class="document-message">
+          Financial reports are always kept private and cannot be published.
+        </p>
+
+        <div>
+          <button type="submit" class="document-save" id="document-save">
+            Save Document
+          </button>
+          <button type="button" class="document-cancel"
+                  id="document-cancel" hidden>
+            Cancel
+          </button>
+        </div>
+
+        <p id="document-form-message" class="document-message"></p>
+      </form>
+    </section>
+
+    <section class="documents-panel">
+      <h2>Existing Documents</h2>
+      <p id="document-list-message" class="document-message"></p>
+
+      <div class="documents-table-wrap">
+        <table class="documents-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Category</th>
+              <th>Reference</th>
+              <th>Date</th>
+              <th>Visibility</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="documents-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="documents.js"></script>
+</body>
+</html>
