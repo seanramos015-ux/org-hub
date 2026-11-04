@@ -361,6 +361,14 @@
     }
 
     initialize();
+
+    async function uploadLogo(file) {
+  const ext = file.name.split('.').pop();
+  const path = `logo/logo-${Date.now()}.${ext}`;
+  const { error } = await supabaseClient.storage.from('site-assets').upload(path, file, { upsert: true });
+  if (error) throw error;
+  return supabaseClient.storage.from('site-assets').getPublicUrl(path).data.publicUrl;
+}
 </script>
 
 </body>

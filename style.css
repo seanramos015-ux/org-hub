@@ -638,3 +638,6 @@ footer{
     color: #fff;
     text-decoration: underline;
 }
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand-logo { height: 48px; width: auto; max-width: 120px; object-fit: contain; flex-shrink: 0; }
+@media (max-width: 720px) { .brand-logo { height: 38px; } }
