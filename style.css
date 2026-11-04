@@ -621,3 +621,20 @@ footer{
 .public-resolution-link:hover {
     opacity: 0.85;
 }
+
+.footer-admin {
+    text-align: center;
+    margin-top: 12px;
+    font-size: 11px;
+}
+
+.footer-admin a {
+    color: #999;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-admin a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
