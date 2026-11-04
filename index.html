@@ -16,8 +16,10 @@
     <div class="brand">
       
       <div class="brand-text">
-        <div class="name">PRMSU College of Engineering - Student Body Organization</div>
-        <div class="sub"></div>
+        <div class="name" data-site-setting="organization_name">
+    PRMSU College of Engineering - Student Body Organization
+</div>
+        <div class="sub" data-site-setting="organization_subname"></div>
       </div>
     </div>
     <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle menu">
@@ -50,21 +52,44 @@
     <div class="hero">
       <div class="wrap hero-grid">
         <div>
-          <h1>Every record of the chapter, in one place.</h1>
-          <p class="lede">Officers, activities, resolutions, and financial reports — organized so any student, adviser, or member can find what actually happened, without digging through group chats or old posts.</p>
+         <h1 data-site-setting="homepage_headline">
+    Every record of the chapter, in one place.
+</h1>
+
+<p class="lede" data-site-setting="homepage_description">
+    Officers, activities, resolutions, and financial reports — organized
+    so any student, adviser, or member can find what actually happened.
+</p>
           <div class="cta-row">
             <a class="btn solid" href="#" onclick="showView('events');return false;">See upcoming activities</a>
             <a class="btn" href="#" onclick="showView('reports');return false;">View reports &amp; transparency</a>
           </div>
         </div>
+      
         <div class="hero-panel">
-          <div class="k">Chapter snapshot</div>
-          <div class="v">AY 2025–2026</div>
-          <div class="row"><span>Active officers</span><span>12</span></div>
-          <div class="row"><span>Activities logged</span><span>8</span></div>
-          <div class="row"><span>Resolutions on file</span><span>5</span></div>
-          <div class="row"><span>Transparency reports</span><span>3</span></div>
-        </div>
+    <div class="k">Chapter snapshot</div>
+    <div class="v">AY 2026–2027</div>
+
+    <div class="row">
+        <span>Active officers</span>
+        <span id="snapshot-officers">Loading...</span>
+    </div>
+
+    <div class="row">
+        <span>Activities logged</span>
+        <span id="snapshot-activities">Loading...</span>
+    </div>
+
+    <div class="row">
+        <span>Resolutions on file</span>
+        <span id="snapshot-resolutions">Loading...</span>
+    </div>
+
+    <div class="row">
+        <span>Transparency reports</span>
+        <span id="snapshot-reports">Loading...</span>
+    </div>
+</div>
       </div>
     </div>
 
@@ -73,11 +98,17 @@
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px; margin-bottom:52px;">
         <div>
           <div class="tag" style="margin-bottom:10px;">Mission</div>
-          <p style="max-width:48ch;">To build a community of computer engineering students grounded in technical competence, professional integrity, and service to PRMSU and the wider region.</p>
+         <p data-site-setting="mission">
+    To build a community of engineering students grounded in technical
+    competence, professional integrity, and service.
+</p>
         </div>
         <div>
           <div class="tag" style="margin-bottom:10px;">Vision</div>
-          <p style="max-width:48ch;">A chapter where every member has access to the organization's work — past and present — and where accountability is a matter of public record, not memory.</p>
+         <p data-site-setting="vision">
+    A chapter where every member has access to the organization's work
+    and where accountability is a matter of public record.
+</p>
         </div>
       </div>
 
@@ -199,8 +230,11 @@
 </main>
 
 <footer class="wrap">
-  <span>OrgHub | PRMSU College of Engineering Student Body Organization</span>
-  <span>Layout draft · not yet wired to a backend</span>
+  <span>
+    OrgHub | <span data-site-setting="organization_name">
+        PRMSU College of Engineering Student Body Organization
+    </span>
+</span>
 </footer>
 
 <script>
@@ -295,5 +329,7 @@
 <script src="public-gallery.js"></script>
 <script src="public-reports.js"></script>
 <script src="public-resolutions.js"></script>
+<script src="public-site-settings.js"></script>
+<script src="public-chapter-snapshot.js"></script>
 </body>
 </html>

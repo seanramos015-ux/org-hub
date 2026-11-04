@@ -4,7 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Site Settings | OrgHub</title>
+    <title>OrgHub | Site Settings</title>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Your existing Supabase configuration -->
+    <script src="supabase-config.js"></script>
 
     <style>
         * {
@@ -13,49 +19,49 @@
 
         body {
             margin: 0;
-            padding: 30px 18px;
+            padding: 30px 20px;
             font-family: Arial, sans-serif;
-            background: #f4f6f9;
-            color: #252525;
+            background: #f4f6f8;
+            color: #222;
         }
 
-        .settings-container {
+        .container {
             max-width: 850px;
             margin: auto;
         }
 
-        .page-header {
+        .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 15px;
             flex-wrap: wrap;
+            gap: 15px;
             margin-bottom: 25px;
         }
 
         h1 {
-            margin: 0 0 8px;
+            margin-bottom: 5px;
         }
 
-        .subtitle {
-            color: #666;
-            margin: 0;
+        .header p {
+            color: #777;
+            margin-top: 0;
         }
 
-        .back-link {
+        a {
             color: #174c35;
             text-decoration: none;
             font-weight: bold;
         }
 
-        .settings-card {
+        .card {
             background: white;
             padding: 28px;
             border-radius: 12px;
-            box-shadow: 0 3px 15px rgba(0,0,0,0.06);
+            box-shadow: 0 3px 15px rgba(0,0,0,.06);
         }
 
-        .field-group {
+        .field {
             margin-bottom: 22px;
         }
 
@@ -65,25 +71,12 @@
             margin-bottom: 8px;
         }
 
-        .field-description {
-            display: block;
-            color: #777;
-            font-size: 13px;
-            margin-bottom: 8px;
-        }
-
         input, textarea {
             width: 100%;
             padding: 12px;
-            border: 1px solid #d5d9df;
+            border: 1px solid #ddd;
             border-radius: 7px;
             font: inherit;
-            outline: none;
-        }
-
-        input:focus, textarea:focus {
-            border-color: #236b49;
-            box-shadow: 0 0 0 2px rgba(35,107,73,0.10);
         }
 
         textarea {
@@ -91,11 +84,16 @@
             resize: vertical;
         }
 
-        .actions {
+        input:focus, textarea:focus {
+            outline: 2px solid #174c35;
+            border-color: transparent;
+        }
+
+        .buttons {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: wrap;
-            margin-top: 28px;
+            margin-top: 25px;
         }
 
         button {
@@ -104,137 +102,266 @@
             border-radius: 7px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 14px;
         }
 
-        #save-settings {
+        #saveBtn {
             background: #174c35;
             color: white;
         }
 
-        #reset-settings {
+        #resetBtn {
             background: #e9ecef;
             color: #333;
         }
 
         button:disabled {
-            opacity: 0.6;
+            opacity: .6;
             cursor: not-allowed;
         }
 
-        #status-message {
+        #message {
             margin-top: 18px;
             font-size: 14px;
         }
 
-        #last-updated {
-            margin-top: 18px;
-            color: #777;
-            font-size: 13px;
-        }
-
         .success {
-            color: #167344;
+            color: green;
         }
 
         .error {
-            color: #c0392b;
+            color: red;
         }
 
-        @media (max-width: 600px) {
-            .settings-card {
-                padding: 20px;
-            }
+        #updated {
+            color: #777;
+            font-size: 13px;
         }
     </style>
-
-    <script src="supabase-config.js" defer></script>
-    <script src="site-settings.js" defer></script>
 </head>
 
 <body>
-    <main class="settings-container">
 
-        <header class="page-header">
-            <div>
-                <h1>Site Settings</h1>
-                <p class="subtitle">
-                    Manage the public information displayed on the OrgHub website.
-                </p>
+<div class="container">
+
+    <div class="header">
+        <div>
+            <h1>Site Settings</h1>
+            <p>Manage your organization's website information.</p>
+        </div>
+
+        <a href="admin-dashboard.html">← Back to Dashboard</a>
+    </div>
+
+    <div class="card">
+
+        <form id="settingsForm">
+
+            <div class="field">
+                <label>Organization Name</label>
+                <input id="organization_name" required>
             </div>
 
-            <a href="admin-dashboard.html" class="back-link">
-                ← Back to Dashboard
-            </a>
-        </header>
+            <div class="field">
+                <label>Academic Year</label>
+                <input id="academic_year" required>
+            </div>
 
-        <section class="settings-card">
+            <div class="field">
+                <label>Homepage Headline</label>
+                <input id="homepage_headline" required>
+            </div>
 
-            <form id="settings-form">
+            <div class="field">
+                <label>Homepage Description</label>
+                <textarea id="homepage_description" required></textarea>
+            </div>
 
-                <div class="field-group">
-                    <label for="organization_name">Organization Name</label>
-                    <span class="field-description">
-                        The official name displayed on the website.
-                    </span>
-                    <input type="text" id="organization_name" required>
-                </div>
+            <div class="field">
+                <label>Mission</label>
+                <textarea id="mission" required></textarea>
+            </div>
 
-                <div class="field-group">
-                    <label for="academic_year">Academic Year</label>
-                    <span class="field-description">
-                        Example: 2026–2027
-                    </span>
-                    <input type="text" id="academic_year" required>
-                </div>
+            <div class="field">
+                <label>Vision</label>
+                <textarea id="vision" required></textarea>
+            </div>
 
-                <div class="field-group">
-                    <label for="homepage_headline">Homepage Headline</label>
-                    <span class="field-description">
-                        The main heading visitors see on the homepage.
-                    </span>
-                    <input type="text" id="homepage_headline" required>
-                </div>
+            <div class="buttons">
+                <button type="submit" id="saveBtn">Save Changes</button>
+                <button type="button" id="resetBtn">Reset Changes</button>
+            </div>
 
-                <div class="field-group">
-                    <label for="homepage_description">Homepage Description</label>
-                    <span class="field-description">
-                        A short introduction to your organization.
-                    </span>
-                    <textarea id="homepage_description" required></textarea>
-                </div>
+            <p id="message"></p>
+            <p id="updated">Last updated: Loading...</p>
 
-                <div class="field-group">
-                    <label for="mission">Mission</label>
-                    <span class="field-description">
-                        The official mission statement.
-                    </span>
-                    <textarea id="mission" required></textarea>
-                </div>
+        </form>
+    </div>
+</div>
 
-                <div class="field-group">
-                    <label for="vision">Vision</label>
-                    <span class="field-description">
-                        The official vision statement.
-                    </span>
-                    <textarea id="vision" required></textarea>
-                </div>
+<script>
+    const keys = [
+        "organization_name",
+        "academic_year",
+        "homepage_headline",
+        "homepage_description",
+        "mission",
+        "vision"
+    ];
 
-                <div class="actions">
-                    <button type="submit" id="save-settings">
-                        Save Changes
-                    </button>
+    const form = document.getElementById("settingsForm");
+    const message = document.getElementById("message");
+    const saveBtn = document.getElementById("saveBtn");
+    const resetBtn = document.getElementById("resetBtn");
+    const updated = document.getElementById("updated");
 
-                    <button type="button" id="reset-settings">
-                        Reset Changes
-                    </button>
-                </div>
+    let savedValues = {};
 
-                <p id="status-message" role="status" aria-live="polite"></p>
-                <p id="last-updated">Last updated: Loading...</p>
+    function showMessage(text, type = "") {
+        message.textContent = text;
+        message.className = type;
+    }
 
-            </form>
-        </section>
-    </main>
+    function setLoading(loading) {
+        saveBtn.disabled = loading;
+        resetBtn.disabled = loading;
+        saveBtn.textContent = loading ? "Please wait..." : "Save Changes";
+    }
+
+    // Verify logged-in administrator.
+    async function checkAdmin() {
+        const { data, error } = await supabaseClient.auth.getSession();
+
+        if (error || !data.session) {
+            window.location.href = "admin-login.html";
+            return false;
+        }
+
+        const { data: isAdmin, error: adminError } =
+            await supabaseClient.rpc("is_org_admin");
+
+        if (adminError || !isAdmin) {
+            await supabaseClient.auth.signOut();
+            alert("Unauthorized access.");
+            window.location.href = "admin-login.html";
+            return false;
+        }
+
+        return true;
+    }
+
+    // Load settings.
+    async function loadSettings() {
+        showMessage("Loading settings...");
+
+        const { data, error } = await supabaseClient
+            .from("site_settings")
+            .select("setting_key, setting_value, updated_at");
+
+        if (error) {
+            showMessage("Unable to load settings: " + error.message, "error");
+            return;
+        }
+
+        savedValues = {};
+
+        data.forEach(item => {
+            savedValues[item.setting_key] = item.setting_value;
+
+            const field = document.getElementById(item.setting_key);
+
+            if (field) {
+                field.value = typeof item.setting_value === "string"
+                    ? item.setting_value
+                    : "";
+            }
+        });
+
+        keys.forEach(key => {
+            const field = document.getElementById(key);
+
+            if (!Object.prototype.hasOwnProperty.call(savedValues, key)) {
+                field.value = "";
+            }
+        });
+
+        const dates = data
+            .map(item => item.updated_at)
+            .filter(Boolean)
+            .sort((a, b) => new Date(b) - new Date(a));
+
+        updated.textContent = dates.length
+            ? "Last updated: " + new Date(dates[0]).toLocaleString()
+            : "Last updated: Not available";
+
+        showMessage("Settings loaded successfully.", "success");
+    }
+
+    // Save settings.
+    form.addEventListener("submit", async function(event) {
+        event.preventDefault();
+
+        if (!form.reportValidity()) return;
+
+        if (!confirm("Save all site settings?")) return;
+
+        setLoading(true);
+        showMessage("Saving settings...");
+
+        const updates = keys.map(key => ({
+            setting_key: key,
+            setting_value: document.getElementById(key).value
+        }));
+
+        const { error } = await supabaseClient
+            .from("site_settings")
+            .upsert(updates, {
+                onConflict: "setting_key"
+            });
+
+        if (error) {
+            showMessage("Save failed: " + error.message, "error");
+        } else {
+            showMessage("Settings saved successfully!", "success");
+            await loadSettings();
+        }
+
+        setLoading(false);
+    });
+
+    // Restore saved values.
+    resetBtn.addEventListener("click", async function() {
+        if (!confirm("Discard unsaved changes?")) return;
+
+        setLoading(true);
+        await loadSettings();
+        setLoading(false);
+    });
+
+    // Initialize.
+    async function initialize() {
+        try {
+            if (typeof supabaseClient === "undefined") {
+                showMessage(
+                    "Supabase client not found. Check supabase-config.js.",
+                    "error"
+                );
+                return;
+            }
+
+            const authorized = await checkAdmin();
+
+            if (authorized) {
+                await loadSettings();
+            }
+
+        } catch (error) {
+            console.error(error);
+            showMessage("Error: " + error.message, "error");
+        }
+    }
+
+    initialize();
+</script>
+
 </body>
 </html>
