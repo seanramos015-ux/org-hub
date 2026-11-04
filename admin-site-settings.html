@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -89,6 +88,29 @@
             border-color: transparent;
         }
 
+        .logo-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .logo-preview {
+            height: 64px;
+            max-width: 160px;
+            object-fit: contain;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            padding: 4px;
+            background: #fff;
+        }
+
+        .logo-row small {
+            display: block;
+            margin-top: 6px;
+            color: #777;
+        }
+
         .buttons {
             display: flex;
             gap: 10px;
@@ -157,6 +179,17 @@
         <form id="settingsForm">
 
             <div class="field">
+                <label for="logoFile">Site Logo</label>
+                <div class="logo-row">
+                    <img id="logoPreview" class="logo-preview" alt="Logo preview" style="display:none">
+                    <div>
+                        <input type="file" id="logoFile" accept="image/png,image/jpeg,image/webp,image/svg+xml">
+                        <small>PNG, JPG, WebP or SVG, up to 2 MB. Leave empty to keep the current logo.</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field">
                 <label>Organization Name</label>
                 <input id="organization_name" required>
             </div>
@@ -213,8 +246,12 @@
     const saveBtn = document.getElementById("saveBtn");
     const resetBtn = document.getElementById("resetBtn");
     const updated = document.getElementById("updated");
+    const logoFile = document.getElementById("logoFile");
+    const logoPreview = document.getElementById("logoPreview");
 
     let savedValues = {};
+    let pendingLogoFile = null;
+    let previewObjectUrl = null;
 
     function showMessage(text, type = "") {
         message.textContent = text;
@@ -227,7 +264,64 @@
         saveBtn.textContent = loading ? "Please wait..." : "Save Changes";
     }
 
-    // Verify logged-in administrator.
+    // ---------- Logo handling ----------
+    function showLogoPreview(src) {
+        if (src) {
+            logoPreview.src = src;
+            logoPreview.style.display = "";
+        } else {
+            logoPreview.removeAttribute("src");
+            logoPreview.style.display = "none";
+        }
+    }
+
+    function resetLogoUI() {
+        pendingLogoFile = null;
+        logoFile.value = "";
+        if (previewObjectUrl) {
+            URL.revokeObjectURL(previewObjectUrl);
+            previewObjectUrl = null;
+        }
+        showLogoPreview(savedValues.logo_url || "");
+    }
+
+    logoFile.addEventListener("change", function () {
+        const file = logoFile.files[0];
+        if (!file) return resetLogoUI();
+
+        const okTypes = ["image/png", "image/jpeg", "image/webp", "image/svg+xml"];
+        if (!okTypes.includes(file.type)) {
+            showMessage("Logo must be a PNG, JPG, WebP or SVG image.", "error");
+            return resetLogoUI();
+        }
+        if (file.size > 2 * 1024 * 1024) {
+            showMessage("Logo must be 2 MB or smaller.", "error");
+            return resetLogoUI();
+        }
+
+        pendingLogoFile = file;
+        if (previewObjectUrl) URL.revokeObjectURL(previewObjectUrl);
+        previewObjectUrl = URL.createObjectURL(file);
+        showLogoPreview(previewObjectUrl);
+        showMessage("");
+    });
+
+    async function uploadLogo(file) {
+        const ext = file.name.split(".").pop().toLowerCase();
+        const path = `logo/logo-${Date.now()}.${ext}`;
+
+        const { error } = await supabaseClient.storage
+            .from("site-assets")
+            .upload(path, file, { upsert: true });
+
+        if (error) throw error;
+
+        return supabaseClient.storage
+            .from("site-assets")
+            .getPublicUrl(path).data.publicUrl;
+    }
+
+    // ---------- Verify logged-in administrator ----------
     async function checkAdmin() {
         const { data, error } = await supabaseClient.auth.getSession();
 
@@ -249,7 +343,7 @@
         return true;
     }
 
-    // Load settings.
+    // ---------- Load settings ----------
     async function loadSettings() {
         showMessage("Loading settings...");
 
@@ -269,7 +363,7 @@
 
             const field = document.getElementById(item.setting_key);
 
-            if (field) {
+            if (field && keys.includes(item.setting_key)) {
                 field.value = typeof item.setting_value === "string"
                     ? item.setting_value
                     : "";
@@ -284,6 +378,9 @@
             }
         });
 
+        // Restore the saved logo and clear any unsaved selection.
+        resetLogoUI();
+
         const dates = data
             .map(item => item.updated_at)
             .filter(Boolean)
@@ -296,8 +393,8 @@
         showMessage("Settings loaded successfully.", "success");
     }
 
-    // Save settings.
-    form.addEventListener("submit", async function(event) {
+    // ---------- Save settings ----------
+    form.addEventListener("submit", async function (event) {
         event.preventDefault();
 
         if (!form.reportValidity()) return;
@@ -312,6 +409,17 @@
             setting_value: document.getElementById(key).value
         }));
 
+        try {
+            if (pendingLogoFile) {
+                const logoUrl = await uploadLogo(pendingLogoFile);
+                updates.push({ setting_key: "logo_url", setting_value: logoUrl });
+            }
+        } catch (uploadError) {
+            showMessage("Logo upload failed: " + uploadError.message, "error");
+            setLoading(false);
+            return;
+        }
+
         const { error } = await supabaseClient
             .from("site_settings")
             .upsert(updates, {
@@ -321,15 +429,15 @@
         if (error) {
             showMessage("Save failed: " + error.message, "error");
         } else {
-            showMessage("Settings saved successfully!", "success");
             await loadSettings();
+            showMessage("Settings saved successfully!", "success");
         }
 
         setLoading(false);
     });
 
-    // Restore saved values.
-    resetBtn.addEventListener("click", async function() {
+    // ---------- Reset to last saved values ----------
+    resetBtn.addEventListener("click", async function () {
         if (!confirm("Discard unsaved changes?")) return;
 
         setLoading(true);
@@ -337,7 +445,7 @@
         setLoading(false);
     });
 
-    // Initialize.
+    // ---------- Initialize ----------
     async function initialize() {
         try {
             if (typeof supabaseClient === "undefined") {
@@ -361,14 +469,6 @@
     }
 
     initialize();
-
-    async function uploadLogo(file) {
-  const ext = file.name.split('.').pop();
-  const path = `logo/logo-${Date.now()}.${ext}`;
-  const { error } = await supabaseClient.storage.from('site-assets').upload(path, file, { upsert: true });
-  if (error) throw error;
-  return supabaseClient.storage.from('site-assets').getPublicUrl(path).data.publicUrl;
-}
 </script>
 
 </body>
