@@ -41,7 +41,7 @@ body{
   line-height:1.55;
   -webkit-font-smoothing:antialiased;
 }
-h1,h2,h3,h4,.mono-label,nav,button,.eyebrow-free{
+h1,h2,h3,h4,.mono-label,nav,button,.eyebrow-free,p{
   font-family:'GARET', 'Montserrat', sans-serif;
 }
 a{color:inherit;}
@@ -641,3 +641,14 @@ footer{
 .brand { display: flex; align-items: center; gap: 12px; }
 .brand-logo { height: 48px; width: auto; max-width: 120px; object-fit: contain; flex-shrink: 0; }
 @media (max-width: 720px) { .brand-logo { height: 38px; } }
+
+/* Mobile Font */
+@media screen and (max-width: 768px) {
+    body,
+    button,
+    input,
+    textarea,
+    select {
+        font-family: Helvetica, Arial, sans-serif !important;
+    }
+}
