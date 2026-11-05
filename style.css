@@ -645,10 +645,62 @@ footer{
 /* Mobile Font */
 @media screen and (max-width: 768px) {
     body,
+    lede,
     button,
     input,
     textarea,
     select {
         font-family: Helvetica, Arial, sans-serif !important;
+    }
+}
+
+
+/* Mobile Header Layout */
+@media screen and (max-width: 768px) {
+    .header-inner {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        gap: 12px;
+        position: relative;
+    }
+
+    .brand {
+        display: flex;
+        align-items: center;
+        flex: 0 1 auto;
+        min-width: 0;
+        gap: 10px;
+        order: 1;
+    }
+
+    .brand-logo {
+        height: 38px;
+        width: auto;
+        flex-shrink: 0;
+    }
+
+    .brand-text {
+        min-width: 0;
+        text-align: left;
+    }
+
+    .brand-text .name {
+        font-size: 0.82rem;
+        line-height: 1.25;
+    }
+
+    .nav-toggle {
+        display: flex;
+        order: 2;
+        flex: 0 0 42px;
+        width: 42px;
+        height: 38px;
+        margin-left: auto;
+    }
+
+    nav.primary {
+        order: 3;
     }
 }
