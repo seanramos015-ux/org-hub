@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Hero Photos | OrgHub</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .hero-admin { max-width: 1100px; margin: 40px auto; padding: 20px; }
+    .hero-panel-box { background: white; padding: 24px; border-radius: 12px; margin: 24px 0; }
+    .hero-form { display: grid; gap: 14px; }
+    .hero-form label { display: grid; gap: 6px; font-weight: 600; }
+    .hero-form input, .hero-form textarea {
+      width: 100%; padding: 11px; border: 1px solid #ccc;
+      border-radius: 6px; font: inherit;
+    }
+    .hero-form textarea { min-height: 70px; }
+    .hero-form button, .hero-action {
+      padding: 9px 14px; border: 0; border-radius: 6px; cursor: pointer;
+    }
+    .hero-save { background: #173f35; color: white; }
+    .hero-cancel { background: #e8e8e8; }
+    .hero-hint { font-size: 0.85rem; color: #666; font-weight: 400; }
+    .hero-table-wrap { overflow-x: auto; }
+    .hero-table { width: 100%; border-collapse: collapse; }
+    .hero-table th, .hero-table td {
+      text-align: left; padding: 12px; border-bottom: 1px solid #ddd;
+      vertical-align: middle;
+    }
+    .hero-thumb { width: 140px; height: 70px; object-fit: cover; border-radius: 6px; }
+    .hero-move { background: #eef0f3; margin: 1px; padding: 6px 10px; }
+    .hero-move:disabled { opacity: .4; cursor: not-allowed; }
+    .hero-edit { background: #e7edf8; margin: 2px; }
+    .hero-delete { background: #fbe5e5; margin: 2px; }
+    #hero-preview { max-width: 320px; max-height: 160px; object-fit: cover; border-radius: 6px; }
+    .hero-message { margin: 10px 0; }
+  </style>
+</head>
+<body>
+  <main class="hero-admin">
+    <p><a href="admin-dashboard.html">← Back to Dashboard</a></p>
+    <h1>Manage Hero Photos</h1>
+    <p>Photos shown in the banner at the top of the public homepage. Published photos rotate automatically in the order below.</p>
+
+    <section class="hero-panel-box">
+      <h2 id="hero-form-title">Add Hero Photo</h2>
+
+      <form id="hero-form" class="hero-form">
+        <label>
+          Caption
+          <textarea id="hero-caption" maxlength="200"
+                    placeholder="Short text shown on the photo (optional)"></textarea>
+        </label>
+
+        <label>
+          Upload Image
+          <input id="hero-image" type="file" accept="image/jpeg,image/png,image/webp">
+          <span class="hero-hint">Use a wide landscape photo, at least 1600px wide. JPG, PNG or WebP, up to 5 MB.</span>
+        </label>
+
+        <img id="hero-preview" alt="Selected image preview" hidden>
+
+        <label>
+          Display Order
+          <input id="hero-sort" type="number" min="0" step="1" value="1">
+          <span class="hero-hint">Lower numbers show first. You can also use the arrows in the list.</span>
+        </label>
+
+        <label>
+          <span>
+            <input id="hero-published" type="checkbox" style="width:auto;">
+            Publish this photo
+          </span>
+        </label>
+
+        <div>
+          <button type="submit" class="hero-save" id="hero-save">Save Photo</button>
+          <button type="button" class="hero-cancel" id="hero-cancel" hidden>Cancel</button>
+        </div>
+
+        <p id="hero-form-message" class="hero-message"></p>
+      </form>
+    </section>
+
+    <section class="hero-panel-box">
+      <h2>Existing Hero Photos</h2>
+      <p id="hero-list-message" class="hero-message"></p>
+
+      <div class="hero-table-wrap">
+        <table class="hero-table">
+          <thead>
+            <tr>
+              <th>Order</th>
+              <th>Photo</th>
+              <th>Caption</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="hero-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="hero.js"></script>
+</body>
+</html>

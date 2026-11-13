@@ -32,8 +32,15 @@
       <button data-view="officers">OFFICERS</button>
       <button data-view="events">EVENTS</button>
       <button data-view="gallery">GALLERY</button>
-      <button data-view="reports">REPORTS &amp; TRANSPARENCY</button>
-      <button data-view="resolutions">RESOLUTIONS</button>
+      <div class="nav-dropdown">
+        <button class="dropdown-toggle" type="button" data-group="reports resolutions" aria-haspopup="true" aria-expanded="false">
+          REPORTS &amp; TRANSPARENCY <span class="caret" aria-hidden="true"></span>
+        </button>
+        <div class="dropdown-menu">
+          <button data-view="reports">REPORTS</button>
+          <button data-view="resolutions">RESOLUTIONS</button>
+        </div>
+      </div>
       <button data-view="evaluate">EVALUATE</button>
     </nav>
   </div>
@@ -262,8 +269,11 @@ window.addEventListener('pageshow', e => {      // back/forward cache
 });
 
   // ---------- Photo hero carousel ----------
+  // Photos are managed in Admin > Hero Photos (public-hero.js loads them from Supabase).
+  // This list is only the FALLBACK used when no published hero photos exist
+  // or the database can't be reached.
   // src: image URL or relative path; caption: text shown on the slide.
-  const heroPhotos = [
+  let heroPhotos = [
     { src: "images/coe1.jpg", caption: "Most active student organization , Aug 2026" },
     // { src: "images/assembly.jpg", caption: "General Assembly, Sep 2026" },
     // { src: "images/industry-talk.jpg", caption: "Industry Talk: Embedded Careers" },
@@ -278,16 +288,22 @@ window.addEventListener('pageshow', e => {      // back/forward cache
     if(heroPhotos.length === 0){
       slidesEl.innerHTML = `<div class="empty-state">
           <div>No photos yet</div>
-          <div class="hint">Add entries to the heroPhotos list in the HTML code to fill this hero.</div>
+          <div class="hint">Add and publish photos in Admin &gt; Hero Photos to fill this hero.</div>
         </div>`;
       dotsEl.innerHTML = '';
       return;
     }
-    slidesEl.innerHTML = heroPhotos.map((p,i)=>
-      `<div class="slide ${i===heroIndex?'active':''}" style="background-image:url('${p.src}')">
-         <div class="cap">${p.caption}</div>
-       </div>`
-    ).join('');
+    // Built with DOM nodes (not innerHTML) so captions from the database can't inject markup.
+    slidesEl.replaceChildren(...heroPhotos.map((p,i)=>{
+      const slide = document.createElement('div');
+      slide.className = 'slide' + (i===heroIndex ? ' active' : '');
+      slide.style.backgroundImage = 'url("' + encodeURI(p.src).replace(/"/g,'%22') + '")';
+      const cap = document.createElement('div');
+      cap.className = 'cap';
+      cap.textContent = p.caption || '';
+      slide.appendChild(cap);
+      return slide;
+    }));
     dotsEl.innerHTML = heroPhotos.map((_,i)=>
       `<button class="${i===heroIndex?'active':''}" data-i="${i}" aria-label="Show photo ${i+1}"></button>`
     ).join('');
@@ -309,6 +325,15 @@ window.addEventListener('pageshow', e => {      // back/forward cache
     }
   }
 
+  // Called by public-hero.js once the published photos have loaded.
+  function setHeroPhotos(photos){
+    if(!Array.isArray(photos) || photos.length === 0) return;   // keep the fallback
+    heroPhotos = photos;
+    heroIndex = 0;
+    renderHero();
+    restartHeroTimer();
+  }
+
   renderHero();
   restartHeroTimer();
 
@@ -323,22 +348,62 @@ window.addEventListener('pageshow', e => {      // back/forward cache
   });
 
   // ---------- Navigation ----------
+  const dropdownWrap = primaryNav.querySelector('.nav-dropdown');
+  const dropdownToggle = primaryNav.querySelector('.dropdown-toggle');
+  const isMobileNav = () => window.matchMedia('(max-width:760px)').matches;
+
   function showView(name){
     const target = document.getElementById('view-'+name);
     if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
-    document.querySelectorAll('#primary-nav button').forEach(b=>{
+    document.querySelectorAll('#primary-nav button[data-view]').forEach(b=>{
       b.classList.toggle('active', b.dataset.view===name);
     });
+    // The dropdown button is highlighted while any of its sections is active.
+    if(dropdownToggle){
+      const group = (dropdownToggle.dataset.group || '').split(' ');
+      dropdownToggle.classList.toggle('active', group.includes(name));
+    }
   }
 
-  primaryNav.querySelectorAll('button').forEach(b=>{
+  function closeDropdown(){
+    if(!dropdownWrap) return;
+    dropdownWrap.classList.remove('open');
+    dropdownToggle.setAttribute('aria-expanded','false');
+  }
+
+  // Regular nav buttons and the dropdown options: pan to their section.
+  primaryNav.querySelectorAll('button[data-view]').forEach(b=>{
     b.addEventListener('click', ()=>{
       showView(b.dataset.view);
+      closeDropdown();
+      if(dropdownWrap && dropdownWrap.contains(b)){
+        dropdownWrap.classList.add('suppress');   // hide the menu until the pointer leaves
+        b.blur();
+      }
       primaryNav.classList.remove('open');
       navToggle.classList.remove('open');
       navToggle.setAttribute('aria-expanded','false');
     });
   });
+
+  if(dropdownWrap){
+    // Desktop: hover/focus opens the menu; clicking the title goes to Reports.
+    // Mobile: clicking the title expands/collapses the options.
+    dropdownToggle.addEventListener('click', ()=>{
+      if(isMobileNav()){
+        const open = dropdownWrap.classList.toggle('open');
+        dropdownToggle.setAttribute('aria-expanded', open);
+      } else {
+        showView('reports');
+        dropdownWrap.classList.add('suppress');
+        dropdownToggle.blur();
+      }
+    });
+    dropdownWrap.addEventListener('mouseleave', ()=> dropdownWrap.classList.remove('suppress'));
+    document.addEventListener('click', e=>{
+      if(!dropdownWrap.contains(e.target)) closeDropdown();
+    });
+  }
 </script>
 
 <!-- Supabase JavaScript Library -->
@@ -347,6 +412,7 @@ window.addEventListener('pageshow', e => {      // back/forward cache
 <!-- OrgHub Supabase Configuration -->
 <script src="supabase-config.js"></script>
 <script src="public.js"></script>
+<script src="public-hero.js"></script>
 <script src="public-events.js"></script>
 <script src="public-evaluations.js"></script>
 <script src="public-gallery.js"></script>
