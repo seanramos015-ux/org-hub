@@ -889,12 +889,12 @@ nav.primary .dropdown-menu button.active{
 /* ---------- Mobile Font ---------- */
 @media screen and (max-width: 768px) {
     body,
-    lede,
+    .lede,
     button,
     input,
     textarea,
     select {
-        font-family: Helvetica, Arial, sans-serif !important;
+        font-family: 'Poppins', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
     }
 }
 
