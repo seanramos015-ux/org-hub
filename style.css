@@ -1012,7 +1012,7 @@ footer{
 }
 
 
-/* ---------- Full-width frosted orange footer ---------- */
+/* ---------- Compact full-width frosted orange footer ---------- */
 footer.site-footer{
   position:relative;
   isolation:isolate;
@@ -1022,8 +1022,8 @@ footer.site-footer{
   justify-content:flex-end;
   width:100%;
   max-width:none;
-  min-height:390px;
-  margin:72px 0 0;
+  min-height:215px;
+  margin:40px 0 0;
   padding:0;
   overflow:hidden;
   color:#fff;
@@ -1050,8 +1050,8 @@ footer.site-footer{
 }
 .site-footer .footer-glass{
   width:min(760px,calc(100% - 36px));
-  margin:54px auto 28px;
-  padding:34px 28px 30px;
+  margin:30px auto 15px;
+  padding:19px 16px 17px;
   border:1px solid rgba(255,255,255,.32);
   border-radius:18px;
   background:rgba(255,133,45,.25);
@@ -1115,7 +1115,7 @@ footer.site-footer{
 .site-footer .footer-admin a:hover{color:#fff;}
 .site-footer .footer-copyright{
   width:100%;
-  padding:15px 20px;
+  padding:9px 16px;
   color:rgba(255,255,255,.88);
   background:rgba(64,24,0,.48);
   border-top:1px solid rgba(255,255,255,.22);
@@ -1125,9 +1125,9 @@ footer.site-footer{
   text-align:center;
 }
 @media(max-width:760px){
-  footer.site-footer{min-height:350px;margin-top:48px;}
-  .site-footer .footer-glass{margin:34px auto 20px;padding:28px 18px 24px;}
+  footer.site-footer{min-height:193px;margin-top:28px;}
+  .site-footer .footer-glass{margin:19px auto 10px;padding:16px 10px 13px;}
   .site-footer .footer-contact{gap:9px;}
   .site-footer .footer-contact-link{min-width:105px;padding:9px 13px;}
-  .site-footer .footer-copyright{font-size:.68rem;padding:13px 16px;}
+  .site-footer .footer-copyright{font-size:.68rem;padding:7px 12px;}
 }
