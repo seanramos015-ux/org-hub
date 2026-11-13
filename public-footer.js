@@ -3,6 +3,11 @@
 // Random published gallery photo from the orghub-public storage bucket.
 // ==========================================
 
+// ==========================================
+// ORGHUB - PUBLIC FOOTER
+// Random image from the public storage bucket's hero/ folder.
+// ==========================================
+
 (async function loadPublicFooter() {
   const footer = document.getElementById("site-footer");
   const year = document.getElementById("footer-year");
@@ -10,34 +15,36 @@
   if (!footer || typeof supabaseClient === "undefined") return;
 
   try {
-    const { data, error } = await supabaseClient
-      .from("gallery")
-      .select("image_path")
-      .eq("is_published", true)
-      .not("image_path", "is", null);
+    const bucket = supabaseClient.storage.from("orghub-public");
+    const { data: files, error } = await bucket.list("hero", {
+      limit: 100,
+      sortBy: { column: "name", order: "asc" }
+    });
 
     if (error) throw error;
-    const images = (data || []).filter(item => item.image_path);
 
-    if (!images.length) return;
+    const imageFiles = (files || []).filter(file =>
+      file.name &&
+      !file.name.startsWith(".") &&
+      /\.(avif|gif|jpe?g|png|webp)$/i.test(file.name)
+    );
 
-    const selected = images[Math.floor(Math.random() * images.length)];
-    let imageUrl = selected.image_path;
-
-    if (!/^https?:\/\//i.test(imageUrl)) {
-      const { data: publicData } = supabaseClient.storage
-        .from("orghub-public")
-        .getPublicUrl(imageUrl);
-      imageUrl = publicData.publicUrl;
+    if (!imageFiles.length) {
+      console.warn("No images found in orghub-public/hero.");
+      return;
     }
+
+    const selected = imageFiles[Math.floor(Math.random() * imageFiles.length)];
+    const { data: publicData } = bucket.getPublicUrl("hero/" + selected.name);
+    const imageUrl = publicData && publicData.publicUrl;
 
     const background = footer.querySelector(".footer-background");
     if (background && imageUrl) {
-      const safeUrl = imageUrl.replace(/(["\\])/g, "\\$1");
       background.style.backgroundImage =
-        'linear-gradient(115deg,rgba(191,75,0,.78),rgba(255,126,25,.58)),url("' + safeUrl + '")';
+        'linear-gradient(115deg,rgba(191,75,0,.78),rgba(255,126,25,.58)),url("' +
+        imageUrl.replace(/(["\\])/g, "\\$1") + '")';
     }
   } catch (error) {
-    console.error("Footer background image error:", error);
+    console.error("Footer hero-folder image error:", error);
   }
 })();
