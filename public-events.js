@@ -234,8 +234,9 @@ function renderEventCalendar(events) {
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-    // Get all published events scheduled for this month.
-    const eventDays = new Set();
+    // Group this month's published events by day of month,
+    // so each day can show the title(s) of its event(s).
+    const eventsByDay = new Map();
 
     events.forEach(event => {
         if (!event.starts_at) return;
@@ -246,7 +247,13 @@ function renderEventCalendar(events) {
             eventDate.getFullYear() === year &&
             eventDate.getMonth() === month
         ) {
-            eventDays.add(eventDate.getDate());
+            const dayNumber = eventDate.getDate();
+
+            if (!eventsByDay.has(dayNumber)) {
+                eventsByDay.set(dayNumber, []);
+            }
+
+            eventsByDay.get(dayNumber).push(event);
         }
     });
 
@@ -268,14 +275,21 @@ function renderEventCalendar(events) {
 
         dayCell.appendChild(number);
 
-        if (eventDays.has(day)) {
+        const dayEvents = eventsByDay.get(day);
+
+        if (dayEvents && dayEvents.length) {
             dayCell.classList.add("has-event");
 
-            const dot = document.createElement("div");
-            dot.className = "dot";
-            dot.textContent = "event";
+            dayEvents.forEach(event => {
+                const dot = document.createElement("div");
+                dot.className = "dot";
 
-            dayCell.appendChild(dot);
+                const eventTitle = event.title || "Untitled event";
+                dot.textContent = eventTitle;
+                dot.title = eventTitle; // full title on hover
+
+                dayCell.appendChild(dot);
+            });
         }
 
         calendarBody.appendChild(dayCell);
