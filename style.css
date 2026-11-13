@@ -934,3 +934,29 @@ nav.primary .dropdown-menu button.active{
         order: 3;
     }
 }
+
+
+/* ---------- Homepage typewriter effect (runs once on page load) ---------- */
+#view-home [data-site-setting="homepage_headline"].typewriter-active,
+#view-home [data-site-setting="homepage_description"].typewriter-active{
+    display:inline;
+    border-right:2px solid currentColor;
+    padding-right:3px;
+    animation:typewriterCaret .75s steps(1,end) infinite;
+}
+#view-home [data-site-setting="homepage_headline"].typewriter-done,
+#view-home [data-site-setting="homepage_description"].typewriter-done{
+    border-right:0;
+    padding-right:0;
+    animation:none;
+}
+@keyframes typewriterCaret{
+    50%{border-color:transparent;}
+}
+@media (prefers-reduced-motion:reduce){
+    #view-home [data-site-setting="homepage_headline"],
+    #view-home [data-site-setting="homepage_description"]{
+        animation:none !important;
+        border-right:0 !important;
+    }
+}
