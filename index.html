@@ -242,6 +242,25 @@
 </footer>
 
 <script>
+
+  // ---------- Always start at the top (Home) on reload ----------
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';   // stop the browser re-applying the old position
+}
+
+function resetToHome() {
+  window.scrollTo({ top: 0, left: 0, behavior: 'instant' });  // 'instant' skips the smooth animation
+  document.querySelectorAll('#primary-nav button').forEach(b => {
+    b.classList.toggle('active', b.dataset.view === 'home');
+  });
+}
+
+resetToHome();                                  // as soon as the script runs
+window.addEventListener('load', resetToHome);   // again after images and styles finish loading
+window.addEventListener('pageshow', e => {      // back/forward cache
+  if (e.persisted) resetToHome();
+});
+
   // ---------- Photo hero carousel ----------
   // src: image URL or relative path; caption: text shown on the slide.
   const heroPhotos = [

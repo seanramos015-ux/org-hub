@@ -91,8 +91,11 @@ header.site::before{
 }
 .brand{display:flex; align-items:center; gap:10px; min-width:0; flex:1 1 auto;}
 .brand svg{flex-shrink:0;}
-.brand-text .name{font-weight:700; font-size:0.98rem; letter-spacing:0.01em; line-height:1.2;}
-.brand-text .sub{font-size:0.72rem; line-height:1.2; color:#B9C8D6; font-weight:400;}
+/* brand text uses the same font style as the home headline (h1) */
+.brand-text .name,
+.brand-text .sub{font-family:'GARET', 'Montserrat', sans-serif;}
+.brand-text .name{font-weight:600; font-size:0.98rem; letter-spacing:-0.01em; line-height:1.08;}
+.brand-text .sub{font-size:0.72rem; line-height:1.2; color:#B9C8D6; font-weight:600; letter-spacing:-0.01em;}
 .nav-toggle{display:none;}
 nav.primary{display:flex; gap:2px; flex-wrap:nowrap; justify-content:flex-end; flex:0 0 auto;}
 nav.primary button{
