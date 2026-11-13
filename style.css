@@ -957,3 +957,20 @@ nav.primary .dropdown-menu button.active{
         border-right:0 !important;
     }
 }
+
+
+/* ---------- Officer biography: match the TERM SUMMARY label (.k) ---------- */
+.officer .officer-bio{
+  font-family:'Montserrat', Georgia, serif;
+  font-size:0.72rem;
+  color:var(--ink-soft);
+  line-height:1.55;
+  margin:0;
+  padding:0 12px 16px;
+}
+
+/* ---------- Footer: 50% more vertical space ---------- */
+footer{
+  padding-top:39px;
+  padding-bottom:39px;
+}
