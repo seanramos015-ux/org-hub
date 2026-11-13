@@ -235,29 +235,29 @@
 
 </main>
 
-<footer class="wrap">
-  <span>
-    OrgHub | <span data-site-setting="organization_name">
-        PRMSU College of Engineering Student Body Organization
-    </span>
-</span>
-
-<div class="footer-contact" aria-label="Contact us">
-  <span class="footer-contact-title">Contact Us</span>
-  <a class="footer-contact-link" href="https://web.facebook.com/profile.php?id=100063778551870" target="_blank" rel="noopener noreferrer" aria-label="Visit our Facebook page">
-    <svg class="footer-contact-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M13.5 21v-8.2h2.8l.4-3.2h-3.2V7.5c0-.9.3-1.5 1.6-1.5h1.7V3.1c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.3H7.3v3.2h2.8V21h3.4Z"/></svg>
-    <span>Facebook</span>
-  </a>
-  <a class="footer-contact-link" href="mailto:prmsu.coe.sbo@gmail.com" aria-label="Email PRMSU COE-SBO">
-    <svg class="footer-contact-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm-.4 4.2-7 4.7a1 1 0 0 1-1.2 0l-7-4.7V6l8 5.3L20 6v2.2Z"/></svg>
-    <span>Email</span>
-  </a>
-</div>
-
-<div class="footer-admin">
-    <a href="admin-login.html">OrgHub Admin Login</a>
-</div>
-
+<footer class="site-footer" id="site-footer">
+  <div class="footer-background" aria-hidden="true"></div>
+  <div class="footer-glass">
+    <div class="footer-content">
+      <p class="footer-eyebrow">PRMSU COLLEGE OF ENGINEERING</p>
+      <h2 class="footer-tagline" data-site-setting="homepage_headline">Every record of the chapter, in one place.</h2>
+      <h3 class="footer-connect-title">Connect with us</h3>
+      <div class="footer-contact" aria-label="Contact us">
+        <a class="footer-contact-link" href="https://web.facebook.com/profile.php?id=100063778551870" target="_blank" rel="noopener noreferrer" aria-label="Visit our Facebook page">
+          <svg class="footer-contact-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M13.5 21v-8.2h2.8l.4-3.2h-3.2V7.5c0-.9.3-1.5 1.6-1.5h1.7V3.1c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.3H7.3v3.2h2.8V21h3.4Z"/></svg>
+          <span>Facebook</span>
+        </a>
+        <a class="footer-contact-link" href="mailto:prmsu.coe.sbo@gmail.com" aria-label="Email PRMSU COE-SBO">
+          <svg class="footer-contact-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm-.4 4.2-7 4.7a1 1 0 0 1-1.2 0l-7-4.7V6l8 5.3L20 6v2.2Z"/></svg>
+          <span>Email</span>
+        </a>
+      </div>
+      <a class="footer-admin" href="admin-login.html">OrgHub Admin Login</a>
+    </div>
+  </div>
+  <div class="footer-copyright">
+    <span>© <span id="footer-year"></span> <span data-site-setting="organization_name">PRMSU College of Engineering - Student Body Organization</span>. All rights reserved.</span>
+  </div>
 </footer>
 
 <script>
@@ -431,6 +431,7 @@ window.addEventListener('pageshow', e => {      // back/forward cache
 <script src="public-reports.js"></script>
 <script src="public-resolutions.js"></script>
 <script src="public-site-settings.js"></script>
+<script src="public-footer.js"></script>
 <script src="public-chapter-snapshot.js"></script>
 <script src="public-logo.js"></script>
 </body>
