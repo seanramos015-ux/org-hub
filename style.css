@@ -163,11 +163,27 @@ nav.primary button.active{color:#fff; background:rgba(255,255,255,.10); border-b
 
 /* ---------- Hero ---------- */
 .hero{
+  position:relative;
+  isolation:isolate;
   background:var(--paper);
   border-bottom:1px solid var(--rule);
-  padding:20px 0 16px;                 /* was 64px 0 48px */
+  padding:20px 0 16px;
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background:rgba(255,255,255,.84);
+  backdrop-filter:blur(2px);
+  -webkit-backdrop-filter:blur(2px);
 }
 .hero-grid{
+  position:relative;
+  z-index:1;
   display:grid; grid-template-columns:1fr minmax(260px, 340px); gap:28px; align-items:start;
 }
 .hero h1{
