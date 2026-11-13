@@ -42,20 +42,17 @@ async function loadPublicSiteSettings() {
 }
 
 /*
- * Typewriter effect runs once per page load for the homepage headline
- * and description. It does not run again when users navigate between views.
+ * Typewriter effect runs once per page load for the homepage headline only.
+ * The homepage description remains visible without animation.
  */
 function startHomepageTypewriter() {
     const headline = document.querySelector('[data-site-setting="homepage_headline"]');
-    const description = document.querySelector('[data-site-setting="homepage_description"]');
 
-    if (!headline || !description || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (!headline || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         return;
     }
 
     const headlineText = headline.textContent.trim();
-    const descriptionText = description.textContent.trim();
-
     function typeText(element, fullText, speed, done) {
         const characters = Array.from(fullText);
         let index = 0;
@@ -79,12 +76,8 @@ function startHomepageTypewriter() {
         typeNextCharacter();
     }
 
-    // Headline first, followed by the supporting description.
-    typeText(headline, headlineText, 42, () => {
-        window.setTimeout(() => {
-            typeText(description, descriptionText, 18);
-        }, 180);
-    });
+    // Animate only the headline. The description is left untouched.
+    typeText(headline, headlineText, 42);
 }
 
 loadPublicSiteSettings();
