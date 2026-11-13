@@ -165,21 +165,19 @@ nav.primary button.active{color:#fff; background:rgba(255,255,255,.10); border-b
 .hero{
   position:relative;
   isolation:isolate;
-  background:var(--paper);
+  background:transparent;               /* the photo now lives on #view-home behind the whole page section */
   border-bottom:1px solid var(--rule);
   padding:20px 0 16px;
+}
+/* Homepage background photo (set by public-home-hero-background.js) covers the whole home section */
+#view-home{
+  background-color:var(--paper);
   background-size:cover;
   background-position:center;
   background-repeat:no-repeat;
 }
 .hero::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:-1;
-  background:rgba(255,255,255,.84);
-  backdrop-filter:blur(2px);
-  -webkit-backdrop-filter:blur(2px);
+  content:none;
 }
 .hero-grid{
   position:relative;

@@ -1,7 +1,7 @@
 // ==========================================
 // ORGHUB - PUBLIC HOMEPAGE HERO BACKGROUND
 // Loads a random photo from the public "site-assets" storage bucket and
-// uses it as the homepage hero background.
+// uses it as the background of the whole home section (#view-home).
 //
 // Where it looks (in order, first source that has images wins):
 //   1. bucket "site-assets"  -> files in the root and in any sub-folder
@@ -16,9 +16,9 @@
   ];
   const IMAGE_PATTERN = /\.(avif|gif|jpe?g|png|webp)$/i;
 
-  const hero = document.querySelector("#view-home .hero");
+  const hero = document.getElementById("view-home");   // whole home section
   if (!hero || typeof supabaseClient === "undefined") {
-    console.warn("[hero-bg] Homepage hero or Supabase client was not found.");
+    console.warn("[hero-bg] Home section (#view-home) or Supabase client was not found.");
     return;
   }
 
@@ -105,10 +105,10 @@
       probe.src = imageUrl;
     });
 
-    // Photo plus a soft white wash so the hero text stays readable.
+    // Photo plus a soft white wash so text across the whole section stays readable.
     hero.style.setProperty(
       "background-image",
-      'linear-gradient(rgba(255,255,255,.48),rgba(255,255,255,.48)),url("' +
+      'linear-gradient(rgba(255,255,255,.55),rgba(255,255,255,.55)),url("' +
         imageUrl.replace(/(["\\])/g, "\\$1") + '")',
       "important"
     );
