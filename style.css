@@ -974,3 +974,39 @@ footer{
   padding-top:39px;
   padding-bottom:39px;
 }
+
+
+/* ---------- Footer contact links ---------- */
+.footer-contact{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:12px;
+}
+.footer-contact-title{
+  color:var(--ink);
+  font-weight:600;
+}
+.footer-contact-link{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  color:var(--ink-soft);
+  text-decoration:none;
+  transition:color .2s ease;
+}
+.footer-contact-link:hover{
+  color:var(--ink);
+}
+.footer-contact-icon{
+  width:17px;
+  height:17px;
+  display:block;
+}
+@media (max-width:760px){
+  .footer-contact{
+    justify-content:flex-start;
+    gap:14px;
+    margin-top:10px;
+  }
+}
