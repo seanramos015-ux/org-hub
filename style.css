@@ -523,7 +523,7 @@ nav.primary .dropdown-menu button.active{
   .nav-toggle{
     display:flex; flex-direction:column; justify-content:center; align-items:center;
     gap:5px; width:42px; height:38px;
-    background:none; border:1px solid rgba(246,244,238,0.35); border-radius:var(--radius);
+    background:none; border:none; border-radius:var(--radius);
     cursor:pointer; padding:8px;
     transition:background .15s var(--ease), border-color .15s var(--ease);
   }
