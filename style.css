@@ -31,7 +31,7 @@
   --ease:cubic-bezier(.22,.61,.36,1);
 
   /* Frosted-glass tokens */
-  --glass-tint:rgba(63,63,63,.55);
+  --glass-tint:rgba(196,76,0,.58);
   --glass-border:rgba(255,255,255,.22);
   --glass-blur:blur(16px) saturate(170%);
 }
@@ -73,14 +73,14 @@ header.site::before{
   content:'';
   position:absolute; inset:0; z-index:-1;
   background:
-    linear-gradient(180deg, rgba(255,255,255,.20), rgba(255,255,255,.06)),
+    linear-gradient(135deg, rgba(255,153,64,.38), rgba(196,76,0,.66)),
     var(--glass-tint);
   -webkit-backdrop-filter:var(--glass-blur);
   backdrop-filter:var(--glass-blur);
 }
 /* Fallback for browsers without backdrop-filter */
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
-  header.site::before{background:rgba(63,63,63,.95);}
+  header.site::before{background:rgba(174,65,0,.96);}
 }
 
 .header-inner{
@@ -95,7 +95,7 @@ header.site::before{
 .brand-text .name,
 .brand-text .sub{font-family:'GARET', 'Montserrat', sans-serif;}
 .brand-text .name{font-weight:600; font-size:0.98rem; letter-spacing:-0.01em; line-height:1.08;}
-.brand-text .sub{font-size:0.72rem; line-height:1.2; color:#B9C8D6; font-weight:600; letter-spacing:-0.01em;}
+.brand-text .sub{font-size:0.72rem; line-height:1.2; color:#FFE0C4; font-weight:600; letter-spacing:-0.01em;}
 .nav-toggle{display:none;}
 nav.primary{display:flex; gap:2px; flex-wrap:nowrap; justify-content:flex-end; flex:0 0 auto;}
 nav.primary button{
