@@ -58,45 +58,46 @@
   <section class="view" id="view-home">
     <div class="hero">
       <div class="wrap hero-grid">
-        <div>
-         <h1 data-site-setting="homepage_headline">
-    Every record of the chapter, in one place.
-</h1>
-
-<p class="lede" data-site-setting="homepage_description">
-    Officers, activities, resolutions, and financial reports — organized
-    so any student, adviser, or member can find what actually happened.
-</p>
+        <div class="hero-copy">
+          <h1 data-site-setting="homepage_headline">
+            Every record of the chapter, in one place.
+          </h1>
+          <p class="lede" data-site-setting="homepage_description">
+            Officers, activities, resolutions, and financial reports — organized
+            so any student, adviser, or member can find what actually happened.
+          </p>
           <div class="cta-row">
             <a class="btn solid" href="#" onclick="showView('events');return false;">See upcoming activities</a>
             <a class="btn" href="#" onclick="showView('reports');return false;">View reports &amp; transparency</a>
           </div>
         </div>
-      
+      </div>
+
+      <div class="wrap hero-panel-wrap">
         <div class="hero-panel">
-    <div class="k">TERM SUMMARY</div>
-    <div class="v">AY 2026–2027</div>
-
-    <div class="row">
-        <span>Active officers</span>
-        <span id="snapshot-officers">Loading...</span>
-    </div>
-
-    <div class="row">
-        <span>Activities logged</span>
-        <span id="snapshot-activities">Loading...</span>
-    </div>
-
-    <div class="row">
-        <span>Resolutions on file</span>
-        <span id="snapshot-resolutions">Loading...</span>
-    </div>
-
-    <div class="row">
-        <span>Transparency reports</span>
-        <span id="snapshot-reports">Loading...</span>
-    </div>
-</div>
+          <div class="hero-panel-heading">
+            <div class="k">TERM SUMMARY</div>
+            <div class="v">AY 2026–2027</div>
+          </div>
+          <div class="hero-stats">
+            <div class="row">
+              <span>Active officers</span>
+              <strong id="snapshot-officers">Loading...</strong>
+            </div>
+            <div class="row">
+              <span>Activities logged</span>
+              <strong id="snapshot-activities">Loading...</strong>
+            </div>
+            <div class="row">
+              <span>Resolutions on file</span>
+              <strong id="snapshot-resolutions">Loading...</strong>
+            </div>
+            <div class="row">
+              <span>Transparency reports</span>
+              <strong id="snapshot-reports">Loading...</strong>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
