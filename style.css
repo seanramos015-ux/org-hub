@@ -1280,3 +1280,157 @@ footer.site-footer{
   #view-home .hero-panel .row{min-height:82px;padding:12px;}
   #view-home .hero-panel .row span{font-size:.7rem;}
 }
+
+
+/* ---------- Homepage hero: transparent intro + editorial number strip ---------- */
+#view-home .hero-copy{
+  background:transparent;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
+  max-width:1160px;
+  min-height:clamp(260px,34vw,430px);
+  padding:clamp(34px,6vw,84px) clamp(8px,2vw,28px);
+}
+#view-home .hero-copy h1{
+  max-width:24ch;
+  font-size:clamp(2.2rem,5.4vw,5rem);
+  text-wrap:balance;
+  text-shadow:0 2px 22px rgba(255,255,255,.28);
+}
+#view-home .hero-copy p.lede{
+  max-width:64ch;
+  font-size:clamp(1rem,1.35vw,1.15rem);
+}
+#view-home .hero-panel-wrap{
+  width:100%;
+  max-width:none;
+  margin:0;
+  padding:0;
+  background:transparent;
+}
+#view-home .hero-panel{
+  width:100%;
+  margin:0;
+  padding:42px max(28px,calc((100vw - var(--max))/2));
+  border:0;
+  border-top:1px solid rgba(255,255,255,.16);
+  border-radius:0;
+  background:#0b0b0b;
+  color:#f4f1ec;
+  box-shadow:none;
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
+}
+#view-home .hero-panel-heading{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  flex-wrap:wrap;
+  margin:0 0 48px;
+}
+#view-home .hero-panel .k{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  color:#a5a5a5;
+  font-family:'GARET','Montserrat',sans-serif;
+  font-size:.78rem;
+  font-weight:700;
+  letter-spacing:.18em;
+}
+#view-home .numbers-rule{
+  display:inline-block;
+  width:34px;
+  height:3px;
+  background:var(--copper);
+}
+#view-home .hero-panel .v{
+  margin:0;
+  color:rgba(255,255,255,.58);
+  font-family:'Montserrat',Arial,sans-serif;
+  font-size:.72rem;
+  font-weight:700;
+  letter-spacing:.12em;
+}
+#view-home .hero-stats{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  border-top:1px solid rgba(255,255,255,.17);
+}
+#view-home .hero-panel .row{
+  position:relative;
+  min-width:0;
+  min-height:235px;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:center;
+  gap:14px;
+  padding:34px 28px;
+  border:0;
+  border-right:1px solid rgba(255,255,255,.17);
+  border-radius:0;
+  background:transparent;
+}
+#view-home .hero-panel .row:first-child{padding-left:0;}
+#view-home .hero-panel .row:last-child{border-right:0;}
+#view-home .hero-panel .row::before{
+  counter-increment:hero-stat;
+  content:"0" counter(hero-stat);
+  color:var(--copper);
+  font-family:'GARET','Montserrat',sans-serif;
+  font-size:.78rem;
+  font-weight:700;
+  letter-spacing:.16em;
+}
+#view-home .hero-stats{counter-reset:hero-stat;}
+#view-home .hero-panel .row strong{
+  order:1;
+  color:#f4f1ec;
+  font-family:'GARET','Montserrat',sans-serif;
+  font-size:clamp(3.2rem,7.2vw,7rem);
+  font-weight:800;
+  line-height:.98;
+  letter-spacing:-.055em;
+  font-variant-numeric:tabular-nums;
+}
+#view-home .hero-panel .row span{
+  order:2;
+  color:#a5a5a5;
+  font-family:'GARET','Montserrat',sans-serif;
+  font-size:.78rem;
+  font-weight:700;
+  letter-spacing:.15em;
+  line-height:1.4;
+  text-transform:uppercase;
+}
+@media(max-width:900px){
+  #view-home .hero-panel{padding:34px 28px;}
+  #view-home .hero-panel-heading{margin-bottom:30px;}
+  #view-home .hero-panel .row{min-height:190px;padding:26px 18px;}
+  #view-home .hero-panel .row strong{font-size:clamp(2.8rem,8vw,5rem);}
+}
+@media(max-width:560px){
+  #view-home .hero-copy{
+    min-height:0;
+    padding:42px 0 48px;
+  }
+  #view-home .hero-copy h1{font-size:clamp(2rem,9vw,3.1rem);}
+  #view-home .hero-panel{padding:30px 18px;}
+  #view-home .hero-panel-heading{margin-bottom:24px;}
+  #view-home .hero-panel .v{font-size:.62rem;}
+  #view-home .hero-stats{grid-template-columns:repeat(2,minmax(0,1fr));}
+  #view-home .hero-panel .row{
+    min-height:150px;
+    padding:22px 14px;
+    border-bottom:1px solid rgba(255,255,255,.17);
+  }
+  #view-home .hero-panel .row:nth-child(odd){padding-left:0;}
+  #view-home .hero-panel .row:nth-child(even){border-right:0;}
+  #view-home .hero-panel .row strong{font-size:clamp(2.8rem,12vw,4rem);}
+  #view-home .hero-panel .row span{font-size:.66rem;letter-spacing:.1em;}
+}
