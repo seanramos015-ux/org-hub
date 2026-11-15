@@ -9,9 +9,25 @@
 <link rel="stylesheet" href="style.css">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+/* Enable scroll-reveal styles as early as possible (before first paint) so
+   elements never flash visible-then-hidden. The safety timeout below removes
+   the class again if scroll-animations.js fails to load, so content can never
+   stay invisible. */
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var de = document.documentElement;
+  de.classList.add('anim');
+  setTimeout(function () {
+    if (!de.classList.contains('anim-ready')) de.classList.remove('anim');
+  }, 2500);
+})();
+</script>
 <base target="_blank">
 </head>
 <body>
+
+<div class="scroll-progress" aria-hidden="true"><span></span></div>
 
 <header class="site">
   <div class="header-inner">
@@ -47,17 +63,18 @@
   </div>
 </header>
 
-<div class="photo-hero" id="photo-hero">
-  <div id="photo-hero-slides"></div>
-  <div class="dots" id="photo-hero-dots"></div>
-</div>
-
 <main>
 
   <!-- HOME -->
   <section class="view" id="view-home">
     <div class="hero">
       <div class="wrap hero-grid">
+        <!-- Photo carousel = background of the hero intro (slides + dots are
+             rendered by the inline script below / public-hero.js). -->
+        <div class="photo-hero" id="photo-hero">
+          <div id="photo-hero-slides"></div>
+          <div class="dots" id="photo-hero-dots"></div>
+        </div>
         <div class="hero-copy">
           <h1 data-site-setting="homepage_headline">
             Every record of the chapter, in one place.
@@ -262,6 +279,10 @@
   </div>
 </footer>
 
+<button class="to-top" id="to-top" type="button" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M12 19V6M5.5 12.5 12 6l6.5 6.5"/></svg>
+</button>
+
 <script>
 
   // ---------- Always start at the top (Home) on reload ----------
@@ -420,6 +441,10 @@ window.addEventListener('pageshow', e => {      // back/forward cache
   }
 </script>
 
+<!-- Scroll animations: reveal-on-scroll, scroll-spy, header state,
+     progress bar, back-to-top, stat count-up. -->
+<script src="scroll-animations.js"></script>
+
 <!-- Supabase JavaScript Library -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -427,7 +452,6 @@ window.addEventListener('pageshow', e => {      // back/forward cache
 <script src="supabase-config.js"></script>
 <script src="public.js"></script>
 <script src="public-hero.js"></script>
-<script src="public-home-hero-background.js"></script>
 <script src="public-events.js"></script>
 <script src="public-evaluations.js"></script>
 <script src="public-gallery.js"></script>
