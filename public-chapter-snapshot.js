@@ -1,3 +1,32 @@
+function animateSnapshotCount(element, targetValue) {
+    const target = Math.max(0, Number(targetValue) || 0);
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (reduceMotion || target === 0) {
+        element.textContent = target.toLocaleString();
+        return;
+    }
+
+    const duration = 1200;
+    const startTime = performance.now();
+
+    function updateCount(now) {
+        const progress = Math.min((now - startTime) / duration, 1);
+        const easedProgress = 1 - Math.pow(1 - progress, 3);
+        const current = Math.round(target * easedProgress);
+        element.textContent = current.toLocaleString();
+
+        if (progress < 1) {
+            requestAnimationFrame(updateCount);
+        } else {
+            element.textContent = target.toLocaleString();
+        }
+    }
+
+    element.textContent = "0";
+    requestAnimationFrame(updateCount);
+}
+
 
 async function loadChapterSnapshot() {
     const officerCount = document.getElementById("snapshot-officers");
@@ -52,11 +81,11 @@ async function loadChapterSnapshot() {
         if (resolutions.error) throw resolutions.error;
         if (reports.error) throw reports.error;
 
-        // Display the actual counts
-        officerCount.textContent = officers.count ?? 0;
-        activityCount.textContent = activities.count ?? 0;
-        resolutionCount.textContent = resolutions.count ?? 0;
-        reportCount.textContent = reports.count ?? 0;
+        // Animate each live database count from zero to its final value.
+        animateSnapshotCount(officerCount, officers.count ?? 0);
+        animateSnapshotCount(activityCount, activities.count ?? 0);
+        animateSnapshotCount(resolutionCount, resolutions.count ?? 0);
+        animateSnapshotCount(reportCount, reports.count ?? 0);
 
     } catch (error) {
         console.error("Chapter snapshot loading error:", error);
