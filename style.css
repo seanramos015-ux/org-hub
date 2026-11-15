@@ -1434,3 +1434,20 @@ footer.site-footer{
   #view-home .hero-panel .row strong{font-size:clamp(2.8rem,12vw,4rem);}
   #view-home .hero-panel .row span{font-size:.66rem;letter-spacing:.1em;}
 }
+
+
+/* Bring the homepage intro closer to the photo carousel (about 3 cm). */
+#view-home{
+  padding-top:0;
+}
+#view-home .hero{
+  padding-top:0;
+}
+#view-home .hero-copy{
+  padding-top:3cm;
+}
+@media(max-width:560px){
+  #view-home .hero-copy{
+    padding-top:28px;
+  }
+}
