@@ -584,11 +584,27 @@ cancelButton.addEventListener("click", () => {
 // INITIALIZE PAGE
 // ==========================================
 
+async function completeExpiredEvents() {
+    const now = new Date().toISOString();
+
+    const { error } = await supabaseClient
+        .from("events")
+        .update({ status: "completed" })
+        .lte("ends_at", now)
+        .neq("status", "completed")
+        .neq("status", "cancelled");
+
+    if (error) {
+        console.error("Automatic event completion check failed:", error);
+    }
+}
+
 async function initializeEventsPage() {
     const authorized = await verifyAdmin();
 
     if (!authorized) return;
 
+    await completeExpiredEvents();
     await loadEvents();
 }
 
