@@ -211,10 +211,10 @@ nav.primary button.active{color:#fff; background:rgba(255,255,255,.10); border-b
 .photo-hero::after{
   content:''; position:absolute; inset:0; z-index:1; pointer-events:none;
   background:linear-gradient(90deg,
-    rgba(246,244,238,.98) 0%,
-    rgba(246,244,238,.93) 46%,
-    rgba(246,244,238,.48) 74%,
-    rgba(246,244,238,.14) 100%);
+    rgba(246,244,238,.95) 0%,
+    rgba(246,244,238,.90) 46%,
+    rgba(246,244,238,.45) 74%,
+    rgba(246,244,238,.12) 100%);
 }
 .photo-hero .slide{
   position:absolute; inset:0;
