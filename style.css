@@ -186,7 +186,7 @@ nav.primary button{
   transition:color .15s var(--ease), border-color .15s var(--ease), background .15s var(--ease);
 }
 nav.primary button:hover{color:#fff; background:rgba(255,255,255,.14);}
-nav.primary button.active{color:#fff; background:rgba(255,255,255,.10); border-bottom-color:var(--copper);}
+nav.primary button.active{color:#fff; background:rgba(255,255,255,.10); border-bottom-color:#111;}
 
 /* circuit trace divider under header */
 .trace{height:10px; width:100%; overflow:hidden; line-height:0; color:transparent; background:var(--glass-tint);}
