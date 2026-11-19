@@ -1469,3 +1469,32 @@ nav.primary .dropdown-menu button.active{
     border-right:0 !important;
   }
 }
+
+/* Keep the homepage photo frame independent from the typewriter text height. */
+#view-home .hero-grid{
+  height:clamp(360px, 38vw, 500px);
+}
+#view-home .photo-hero{
+  height:100%;
+}
+#view-home .hero-copy{
+  height:100%;
+  min-height:0;
+}
+
+@media (max-width:900px){
+  #view-home .hero-grid{
+    height:clamp(420px, 62vw, 520px);
+  }
+}
+
+@media (max-width:560px){
+  #view-home .hero-grid{
+    height:clamp(500px, 125vw, 560px);
+  }
+  #view-home .hero-copy{
+    height:100%;
+    min-height:0;
+  }
+}
+
