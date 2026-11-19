@@ -186,3 +186,12 @@ tbody tr:hover{background:#fcfaf8}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important}
 }
+
+.admin-header-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.admin-public-link{
+  display:inline-flex;align-items:center;min-height:40px;padding:9px 13px;
+  border:1px solid rgba(255,255,255,.24);border-radius:9px;
+  color:#fff!important;text-decoration:none;font-size:.88rem;font-weight:650;
+}
+.admin-public-link:hover{background:rgba(255,255,255,.1);color:#ffbd91!important}
+@media(max-width:520px){.admin-header-actions{width:100%;justify-content:space-between}}
