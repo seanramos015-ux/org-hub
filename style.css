@@ -1422,7 +1422,7 @@ nav.primary .dropdown-menu button.active{
 @media (max-width:560px){
   /* Home hero + numbers strip */
   #view-home .hero-copy{min-height:0; padding:28px 0 48px;}
-  #view-home .hero-copy h1{font-size:clamp(2rem,9vw,3.1rem);}
+  #view-home .hero-copy h1{font-size:clamp(1.75rem,7.5vw,2.5rem); line-height:1.08;}
   #view-home .hero-panel{padding:30px 18px;}
   #view-home .hero-panel-heading{margin-bottom:24px;}
   #view-home .hero-panel .v{font-size:.62rem;}
