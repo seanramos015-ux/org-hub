@@ -195,3 +195,10 @@ tbody tr:hover{background:#fcfaf8}
 }
 .admin-public-link:hover{background:rgba(255,255,255,.1);color:#ffbd91!important}
 @media(max-width:520px){.admin-header-actions{width:100%;justify-content:space-between}}
+
+
+/* Keep admin pages within the viewport without a page-level horizontal scrollbar. */
+html, body{
+  max-width:100%;
+  overflow-x:clip;
+}
