@@ -50,6 +50,13 @@ async function loadPublicEvents() {
     renderPublicEvents(events);
     renderRecentEvents(events);
     renderEventCalendar(events);
+
+    // Refresh time-based labels while the page stays open; the database job
+    // independently persists completed statuses.
+    window.setInterval(() => {
+        renderPublicEvents(events);
+        renderRecentEvents(events);
+    }, 60 * 1000);
 }
 
 
@@ -89,11 +96,11 @@ function getEventStatus(event) {
 
     if (start && now < start) return "Upcoming";
 
-    if (start && now >= start && (!end || now <= end)) {
+    if (start && now >= start && (!end || now < end)) {
         return "Ongoing";
     }
 
-    if (end && now > end) return "Completed";
+    if (end && now >= end) return "Completed";
 
     return event.status || "Upcoming";
 }
