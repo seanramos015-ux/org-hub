@@ -307,7 +307,9 @@ officerForm.addEventListener("submit", async (event) => {
             position: positionInput.value.trim(),
             course_year: courseYearInput.value.trim(),
             bio: bioInput.value.trim(),
-            sort_order: Number(sortOrderInput.value) || 0,
+            sort_order: sortOrderInput.value.trim() === ""
+                ? null
+                : Number(sortOrderInput.value),
             is_published: publishedInput.checked,
             photo_path: currentPhotoPath
         };
@@ -339,13 +341,32 @@ officerForm.addEventListener("submit", async (event) => {
 
         } else {
             // INSERT NEW OFFICER
+            // If Display Order is blank, place this officer after the
+            // current last officer. An explicitly entered number is respected.
+            if (officerData.sort_order === null) {
+                const { data: lastOfficer, error: orderError } = await supabaseClient
+                    .from("officers")
+                    .select("sort_order")
+                    .order("sort_order", { ascending: false })
+                    .limit(1)
+                    .maybeSingle();
+
+                if (orderError) throw orderError;
+
+                officerData.sort_order = lastOfficer
+                    ? Number(lastOfficer.sort_order || 0) + 1
+                    : 1;
+            }
+
             const { error } = await supabaseClient
                 .from("officers")
                 .insert([officerData]);
 
             if (error) throw error;
 
-            showFormMessage("Officer added successfully!");
+            showFormMessage(
+                "Officer added successfully! Display order: " + officerData.sort_order
+            );
         }
 
         resetForm();
